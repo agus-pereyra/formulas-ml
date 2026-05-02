@@ -1,0 +1,357 @@
+\documentclass[11pt, a4paper]{article}
+
+% márgen + layout
+\usepackage[a4paper, margin=3mm, top=3mm, bottom=3mm]{geometry}
+\usepackage{multicol}
+\setlength{\columnsep}{2mm}
+\setlength{\columnseprule}{0.3pt}
+
+% matemática
+\usepackage{amsmath, amssymb, bm}
+
+% tipografía
+\usepackage{microtype}
+\usepackage{parskip}
+\setlength{\parskip}{0pt}
+\setlength{\parindent}{0pt}
+
+% títulos compactos
+\usepackage{titlesec}
+\titlespacing{\section}{0pt}{2pt}{1pt}
+\titlespacing{\subsection}{0pt}{1pt}{0pt}
+\titleformat{\section}{\small\bfseries\centering}{}{0em}{}[\hrule]
+\titleformat{\subsection}{\footnotesize\bfseries}{}{0em}{}
+
+% espaciado ecuaciones
+\setlength{\abovedisplayskip}{1pt}
+\setlength{\belowdisplayskip}{1pt}
+\setlength{\abovedisplayshortskip}{0pt}
+\setlength{\belowdisplayshortskip}{0pt}
+
+% enumeración
+\usepackage{enumitem}
+\setlist{noitemsep, topsep=0pt, leftmargin=*}
+
+% atajos de latex
+\usepackage{physics}
+
+% pseudocódigo
+\usepackage{algorithmicx}
+\usepackage{algpseudocode}
+\algtext*{EndFor}
+\algtext*{EndIf}
+\algtext*{EndWhile}
+\algtext*{EndProcedure}
+\algtext*{EndFunction}
+
+% cuadros
+\usepackage[most]{tcolorbox}
+\tcbset{
+    formulabox/.style={
+        colback=white,
+        colframe=black!60,
+        fonttitle=\bfseries\footnotesize,
+        title=#1,
+        boxrule=0.4pt,
+        arc=1mm,
+        left=1mm, right=1mm, top=0.5mm, bottom=0.5mm,
+        toptitle=0.3mm, bottomtitle=0.2mm,
+        before skip=1.5mm,
+        after skip=1.5mm,
+        before upper={
+            \raggedright\scriptsize
+            \setlength{\abovedisplayskip}{1pt}
+            \setlength{\belowdisplayskip}{1pt}
+            \setlength{\abovedisplayshortskip}{0pt}
+            \setlength{\belowdisplayshortskip}{0pt}
+            },
+    }
+}
+
+% colores
+\usepackage[dvipsnames]{xcolor}
+
+\definecolor{softBlue}{HTML}{7A9EB5}
+\definecolor{softGreen}{HTML}{7AA882} % métricas
+\definecolor{softRed}{HTML}{B57A7A} % modelos
+\definecolor{softPurple}{HTML}{9A85A8} % redes
+\definecolor{softOrange}{HTML}{B8956A} % álgebra 
+\definecolor{softTeal}{HTML}{6A9FA0} % probabilidad / inferencia
+\definecolor{softBrown}{HTML}{8C7B6B} % algoritmos
+\definecolor{softSlate}{HTML}{7A8FA6} % 
+
+% comandos personalizados
+\newcommand{\w}{\mathbf{w}}
+\newcommand{\x}{\mathbf{x}}
+\newcommand{\X}{\mathbf{X}}
+\newcommand{\y}{\mathbf{y}}
+\newcommand{\z}{\mathbf{z}}
+\newcommand{\bias}{\mathbf{b}}
+\newcommand{\preact}{\mathbf{a}}
+\newcommand{\W}{\mathbf{W}}
+\newcommand{\Loss}{\mathcal{L}}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% DOCUMENT %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{document}
+\noindent
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 1 COL %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{minipage}[t]{0.325\textwidth}
+    \vspace{0pt}
+    % LINEAR REGRESSION
+    \begin{tcolorbox}[formulabox=Linear Regression, colframe=softRed]
+        Modelo: $p(y|\x,\w)=\mathcal{N}(y|\w^\top\x,\sigma^2)$ \\
+        Predicción: $\hat{y} = \mathbb{E}[y|\x,\w] =\w^\top \x$ \\
+        $\Loss = \text{MSE} =\frac{1}{N}\sum_i (y_i - \w^\top \x_i)^2$ \\
+        $\grad_\w \Loss = \frac{2}{N}\sum_i (\w^\top\x_i - y_i)\x_i = \frac{2}{N}\mathbf{X}^\top(\mathbf{X}\w - \y)$ \\
+        Solución (MLE / LS): $\w^* = (\X^\top\X)^{-1}\X^\top\y$
+    \end{tcolorbox}
+    % LOGISTIC REGRESSION
+    \begin{tcolorbox}[formulabox=Logistic Regression, colframe=softRed]
+        \textbf{Binaria} \\
+        Modelo: $p(y|\x,\boldsymbol{\theta})=\text{Ber}(y|\sigma(\w^\top \x+b))$ \\
+        Predicción (prob): $\mu_i = \sigma(\w^\top \x_i)$ \\
+        $\Loss = \frac{1}{N} \sum_i \mathbb{H}_{ce}(y_i, \mu_i)$ \\
+        $\grad_\w \Loss = \frac{1}{N} \sum_i (\mu_i - y_i)\x_i = \frac{1}{N}\mathbf{X}^\top(\boldsymbol{\mu} - \y)$\\[5pt]
+        \textbf{Multiclase} \\
+        Modelo: $p(y|\x,\w)=\text{Cat}(y|\text{Softmax}(\w^\top \x))$ \\
+        Predicción (prob): $\boldsymbol{\mu}_i = \text{Softmax}(\w^\top \x_i)$ \\
+        $\Loss = \frac{1}{N} \sum_i \mathbb{H}_{ce}(\y_i, \boldsymbol{\mu}_i)$ \\
+        $\grad_\w \Loss = \frac{1}{N} \sum_i \x_i(\boldsymbol{\mu}_i-\y_i)^\top = \frac{1}{N}\mathbf{X}^\top(\mathbf{M} - \mathbf{Y})$
+        ($\mathbf{M}$ matriz de predicciones, $\mathbf{Y}$ one-hots)
+    \end{tcolorbox}
+    % GAUSSIAN DISCRIMINANT ANALYSIS
+    \begin{tcolorbox}[formulabox=GDA, colframe=softRed]
+        Modelo: $p(y=c|\x, \w) \propto \pi_c p(\x | y=c, \mathbf{w})$ \\
+        Class-cond: $p(\x | y=c, \mathbf{w})=\mathcal{N}(\x | \boldsymbol{\mu}_c, \boldsymbol{\Sigma}_c)$ \\
+        Prior: $\pi_c = p(y=c|\w)$ \\
+        Entrenamiento: MLE $(\hat{\pi}, \hat{\boldsymbol{\mu}}_c, \hat{\boldsymbol{\Sigma}}_c)$ \\
+        MAP: $\hat{\boldsymbol{\Sigma}}_\text{map}= \lambda \text{diag}(\hat{\boldsymbol{\Sigma}}) + (1-\lambda)\hat{\boldsymbol{\Sigma}}$ \\
+        \textbf{QDA} ($\boldsymbol{\Sigma}_c$ libre por clase)\\
+        Frontera: $\x^\top\mathbf{A}\x + \mathbf{b}^\top\x + c_0 = 0$\\
+        $\mathbf{A} = \tfrac{1}{2}(\boldsymbol{\Sigma}_{c'}^{-1}-\boldsymbol{\Sigma}_c^{-1}), \ \mathbf{b} = \boldsymbol{\Sigma}_c^{-1}\boldsymbol{\mu}_c - \boldsymbol{\Sigma}_{c'}^{-1}\boldsymbol{\mu}_{c'}$\\
+        $c_0 = \log\tfrac{\pi_c}{\pi_{c'}} - \tfrac{1}{2}\log\tfrac{|\boldsymbol{\Sigma}_c|}{|\boldsymbol{\Sigma}_{c'}|} - \tfrac{1}{2}(\boldsymbol{\mu}_c^\top\boldsymbol{\Sigma}_c^{-1}\boldsymbol{\mu}_c - \boldsymbol{\mu}_{c'}^\top\boldsymbol{\Sigma}_{c'}^{-1}\boldsymbol{\mu}_{c'})$\\[5pt]
+        \textbf{LDA} ($\boldsymbol{\Sigma}_c = \boldsymbol{\Sigma}\ \forall c$) \\
+        Frontera: $\w^\top\x + w_0 = 0$\\
+        donde $\w = \boldsymbol{\Sigma}^{-1}(\boldsymbol{\mu}_c - \boldsymbol{\mu}_{c'})$\\
+        $w_0 = \log\tfrac{\pi_c}{\pi_{c'}} - \tfrac{1}{2}(\boldsymbol{\mu}_c+\boldsymbol{\mu}_{c'})^\top\w$\\
+    \end{tcolorbox}
+    % NAIVE BAYES
+    \begin{tcolorbox}[formulabox=Naive Bayes, colframe=softRed]
+        Naive Bayes Assumption: $x_d \perp x_{d'} \mid y=c$\\
+        Modelo: $p(y=c|\x) \propto \pi_c \prod_{d=1}^{D} p(x_d|y=c,\boldsymbol{\theta}_{dc})$\\
+        $p(x_d|y=c,\boldsymbol{\theta}_{dc})$ según tipo de $x_d$: \\
+        \begin{itemize}
+            \item Binaria $\text{Ber}(x_d|\theta_{dc})$ \\
+            \item Categórica $= \text{Cat}(x_d | \boldsymbol{\theta}_{dc})$ \\
+            \item Real $= \mathcal{N}(x_d|\mu_{dc},\sigma^2_{dc})$ \\
+        \end{itemize}
+        Entrenamiento: MLE
+    \end{tcolorbox}
+    % DECISION TREE
+    \begin{tcolorbox}[formulabox=CART, colframe=softRed]
+        $\Loss(\boldsymbol{\theta})= \sum_i \ell(y_i, f(\x_i;\boldsymbol{\theta}))=\sum_j^J \sum_{\x_i \in R_j} \ell(y_i, w_j)$ \\
+        Split (nodo $i$): 
+        $$\arg \min_j \min_t \; \frac{|\mathcal{D}_i^L|}{|\mathcal{D}_i|}C^L(\mathcal{D}_i^L)+\frac{|\mathcal{D}_i^R|}{|\mathcal{D}_i|}C^R(\mathcal{D}_i^R)$$ \\
+        $C(\mathcal{D}_i)$ Regresión = $MSE$ \\
+        $C(\mathcal{D}_i)$ Clasificación:
+        \begin{itemize}
+            \item $G_i = \sum_c \hat{\pi}_{ic}(1-\hat{\pi}_{ic})$
+            \item $H_i = \mathbb{H}(\hat{\boldsymbol{\pi}})= -\sum_c \hat{\pi}_{ic} \log \hat{\pi}_{ic}$
+        \end{itemize}
+    \end{tcolorbox}
+    % MULTILAYER PERCEPTRON
+    \begin{tcolorbox}[formulabox=Multi-layer Perceptron (MLP), colframe=softRed]
+        $\z^{(\ell)} = f^{(\ell)}(\z^{(\ell-1)})= \varphi^{(\ell)}(\preact^{(\ell)})$ : output capa $\ell$\\
+        $\preact^{(\ell)} = \W^{(\ell)} \z^{(\ell-1)} + \bias^{(\ell)}$ : preactivación capa $\ell$ \\
+        \textbf{Back-propagation}
+        \begin{algorithmic}[0]
+            \Statex \textit{\# Forward-pass}
+            \State $\z^{(0)} \leftarrow \x_i$
+            \For{$\ell = 1:L$}
+                \State $\preact^{(\ell)} \leftarrow \W^{(\ell)}\z^{(\ell-1)} + \bias^{(\ell)}$
+                \State $\z^{(l)} \leftarrow \varphi^{(\ell)}(\preact^{(\ell)})$
+            \EndFor
+            \State $\hat{\y}_i \leftarrow \z^{(L)}$,\quad $\Loss_i \leftarrow \Loss_i(\y_i, \hat{\y}_i)$
+            \Statex \textit{\# Backward-pass}
+            \State $\delta^{(L)} \leftarrow \varphi'^{(L)}(\preact^{(L)}) \odot \frac{\partial \Loss_i}{\partial \hat{\y}_i}$
+            \State $\frac{\partial \Loss_i}{\partial \W^{(L)}} \leftarrow \delta^{(L)} \z^{(L-1)\top}$
+            \For{$l = L-1:1$}
+                \State $\delta^{(\ell)} \leftarrow \varphi'^{(\ell)}(\preact^{(\ell)}) \odot \W^{(\ell+1)\top}\delta^{(\ell+1)}$
+                \State $\frac{\partial \Loss_i}{\partial \W^{(\ell)}} \leftarrow \delta^{(\ell)} \z^{(\ell-1)\top}$
+                \State $\frac{\partial \Loss_i}{\partial \bias^{(l)}} \leftarrow \delta^{(\ell)}$
+            \EndFor
+        \end{algorithmic}
+    \end{tcolorbox}
+\end{minipage}
+\hfill
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 2 COL %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{minipage}[t]{0.325\textwidth}
+    \vspace{0pt}
+    % non-parametric methods
+    \begin{tcolorbox}[formulabox=Non-Parametric Methods, colframe=softRed]
+        \textbf{KNN-classifier}: 
+        $p(y=c|\x, \mathcal{D}) = \frac{1}{K} \sum_{i\in\mathcal{N}_K(\x, \mathcal{D})}\mathbb{I}(y_i=c)$\\
+        \textbf{Parzen Window Density Estimator}:\\
+        $p(\x, \mathcal{D}) = \tfrac{1}{N}\sum_{i=1}^N \mathcal{K}_h(\x, \x_i)$\\
+    \end{tcolorbox}
+    \begin{tcolorbox}[formulabox=Perceptron, colframe=softRed]
+        $\hat{y} = \mathbb{I}(\w^\top\x + b > 0)$ $\to$ (determinístico) \\
+        Update: $\w_{t+1} \leftarrow \w_t - \eta(\hat{y}_i-y_i)\mathbf{x}_i$ \\
+    \end{tcolorbox}
+    % ACTIVATION FUNCTIONS
+    \begin{tcolorbox}[formulabox=Activation Functions $(\varphi)$, colframe=softPurple]
+        \textbf{Sigmoid}: $\sigma(z)=\frac{1}{1+e^{-z}}$; \quad $\sigma'=\sigma(1-\sigma)$\\
+        \textbf{Tanh}: $\tanh'=1-\tanh^2$\\
+        \textbf{ReLU}: $\max(0,z)$;\quad $\text{ReLU}'=\mathbb{I}[z>0]$\\
+        \textbf{Leaky ReLU}: $\max(\alpha z, z)$,\quad $\alpha\ll 1$\\
+        \textbf{Softplus}: $\log(1+e^z)$\\
+        \textbf{Identity}: $\varphi(z)=z$ \\
+        \textbf{Softmax}: $\sigma(\z)_i = e^{z_i}/\sum_j e^{z_j}$
+    \end{tcolorbox}
+    % NN REGULARIZATION
+    \begin{tcolorbox}[formulabox=NN Regularization + $\grad$ vanishing sol., colframe=softPurple]
+        \textbf{Weight Decay} $(\ell_2)$: MAP estimation \\
+        $p(\w)=\mathcal{N}(\w|\mathbf{0},\alpha^2\mathbf{I})$, $p(\bias)=\mathcal{N}(\bias|\mathbf{0}, \beta^2\mathbf{I})$
+        \textbf{Dropout}: $\theta_{lji}=w_{lji}\epsilon_{li}$, $\epsilon\sim\text{Ber}(1-p)$ \\
+        Al predecir: escalar activaciones por $(1-p)$\\[2pt]
+        \textbf{Early Stopping}: frenar cuando $\uparrow \Loss_\text{val}$ \\[2pt]
+        \textbf{Batch Normalization}: normalizar activaciones por mini-batch $\mathcal{B}$\\
+        $\hat{z}^{(\ell)} = \dfrac{z^{(\ell)} - \mu_\mathcal{B}}{\sqrt{\sigma^2_\mathcal{B}+\varepsilon}}$,\quad
+        $\tilde{z}^{(\ell)} = \gamma\hat{z}^{(\ell)} + \beta$\\
+        \textbf{Glorot/Xavier initialization} \\
+        $w_{ij}\sim \mathcal{N}(0,\sigma^2)$ con $\sigma^2 = 2/(n_{\text{in}}+n_{\text{out}})$
+        \textbf{Activaciones sin saturación}: ReLU, Leaky ReLU (evitan saturación) \\
+        \textbf{Gradient clipping}: $\mathbf{g} = \min\left(0, \mathbf{g}\cdot\tfrac{c}{\|\mathbf{g}\|}\right)$ \\
+        \textbf{Batch Normalization / Layer Normalization}
+    \end{tcolorbox}
+    % OPTIMIZATION
+    \begin{tcolorbox}[formulabox=Optimization, colframe=softBrown]
+        GD: $\w_{t+1} \leftarrow \w_{t} - \eta_t \nabla_{\w}\Loss |_{\w_t}$ \\
+        Newton: $\w_{t+1} \leftarrow \w_{t} - \eta_t \mathbf{H}_t^{-1}\nabla_{\w}\Loss|_{\w_t}$ \\
+        Momentum: $\begin{cases}\w_{t+1} \leftarrow -\eta_t \mathbf{m}_t \\ \mathbf{m}_{t} \leftarrow \beta \mathbf{m}_{t-1} + \grad \Loss_\w|_{\w_{t-1}} \end{cases}$ \\[3pt]
+        Learning-rate Schedule: \begin{itemize}
+            \item Lineal: $\eta_t = (1-\frac{t}{T})\eta_0 + (\frac{t}{T}) \eta_T$
+            \item Potencia: $\eta_t = \eta_0 (1+\frac{t}{s})^c$
+            \item Exponencial: $\eta_t = \eta_0 \cdot c^{(t/s)}$
+        \end{itemize}
+        AdaGrad: $\begin{cases}
+            w_{t+1, d} \leftarrow w_{t,d} - \eta \frac{1}{\sqrt{s_{k,d}+\epsilon}}\frac{\partial \Loss}{\partial w_d}
+            \\
+            s_{t,d} = \sum_{t=1}^{T-1} (\frac{\partial \Loss_t}{\partial w_d})^2\end{cases}$ \\[2pt]
+        ADAM: $\begin{cases}
+            w_{t+1, d} \leftarrow w_{t,d} - \eta \frac{\hat{s}_{t,d}}{\sqrt{\hat{r}_{k,d}+\epsilon}} \\
+            \hat{s}_{t,d} = s_{t,d}/(1-\beta_{1_t}) \\
+            \hat{r}_{t,d} = r_{t,d}/(1-\beta_{2_t}) \\
+            s_{t,d} = \beta_1 s_{t-1,d}+ (1-\beta_1) \frac{\partial \Loss}{\partial w_d} \\
+            r_{t,d} = \beta_2 r_{t-1,d}+ (1-\beta_2) (\frac{\partial \Loss}{\partial w_d})^2
+        \end{cases}$
+    \end{tcolorbox}
+    % REGRESSION METRICS
+    \begin{tcolorbox}[formulabox=Regression Metrics, colframe=softGreen]
+        $e_i \triangleq y_i - \hat{y}_i$ ;
+        $\text{RSS} \triangleq \sum_i e_i^2$ ;
+        $\text{TSS} \triangleq \sum_i (y_i-\bar{y})^2$\\
+        $\text{MSE} = \frac{1}{N}\text{RSS}$ \\
+        $\text{RMSE} = \sqrt{\text{MSE}}$\\
+        $\text{MAE} = \frac{1}{N}\sum_i |e_i|$\\
+        $R^2 \triangleq 1 - \frac{\text{RSS}}{\text{TSS}} \in [0,1]$\quad (varianza explicada)
+    \end{tcolorbox}
+    % CLASSIFICATION METRICS
+    \begin{tcolorbox}[formulabox=Classification Metrics, colframe=softGreen]
+        $\text{Acc} = \frac{TP+TN}{TP+TN+FP+FN}$\quad
+        $\text{Recall} = \frac{TP}{TP+FN}$\\
+        $\text{Precision} = \frac{TP}{TP+FP}$\quad
+        $\text{FPR} = \frac{FP}{FP+TN}$\\
+        $\text{FDR} = \frac{FP}{FP+TP}$\\
+        $F_1 = \frac{2 \cdot \text{Precision} \cdot \text{Recall}}{\text{Precision}+\text{Recall}} = \frac{2TP}{2TP+FP+FN}$\\[2pt]
+        ROC: FPR vs TPR=Recall \\
+        PR: Recall vs Precision \\
+    \end{tcolorbox}
+\end{minipage}
+\hfill
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 3 COL %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{minipage}[t]{0.325\textwidth}
+    \vspace{0pt}
+    % MAP
+    \begin{tcolorbox}[formulabox=Maximum A Posteriori (MAP), colframe=softTeal]
+        $\w^* = \arg\max_\w \; p(\w|\mathcal{D}) = \arg\max_\w \; p(\mathcal{D}|\w)\,p(\w)$ \\
+        $\ell_2 \to p(\w)=\mathcal{N}(\w|\mathbf{0},\lambda^{-1}\mathbf{I}) \to \Loss + \lambda\|\w\|^2$ \\
+        $\ell_1 \to p(\w)=\text{Laplace}(\w|\mathbf{0},\lambda^{-1}) \to\Loss + \lambda\|\w\|_1$
+    \end{tcolorbox}
+    % BAYES
+    \begin{tcolorbox}[formulabox=Bayes, colframe=softTeal]
+        $p(\w|\mathcal{D}) = \dfrac{p(\mathcal{D}|\w)\,p(\w)}{p(\mathcal{D})}
+        \propto p(\mathcal{D}|\w)\,p(\w)$\\[2pt]
+        \textit{posterior} $\propto$ \textit{likelihood} $\times$ \textit{prior}\\
+    \end{tcolorbox}
+    % DISTRIBUTIONS
+    \begin{tcolorbox}[formulabox=Distributions + MLE estimators, colframe=softTeal]
+        \textbf{Gaussiana} $\mathcal{N}(x|\mu,\sigma^2)$:
+        $$\frac{1}{\sqrt{2\pi\sigma^2}}\exp\!\left(-\frac{(x-\mu)^2}{2\sigma^2}\right)$$\\
+        $\hat{\mu} = \tfrac{1}{N}\sum_i x_i$ \quad
+        $\hat{\sigma}^2 = \tfrac{1}{N}\sum_i (x_i - \hat{\mu})^2$\\[2pt]
+        \textbf{Gaussiana Multivariada} $\mathcal{N}(\x|\boldsymbol{\mu},\boldsymbol{\Sigma})$:
+        $$\frac{1}{(2\pi)^{d/2}|\boldsymbol{\Sigma}|^{1/2}}\exp\!\left(-\frac{1}{2}(\x-\boldsymbol{\mu})^\top\boldsymbol{\Sigma}^{-1}(\x-\boldsymbol{\mu})\right)$$\\
+         $\hat{\boldsymbol{\mu}} = \tfrac{1}{N}\sum_i \x_i$ \quad
+        $\hat{\boldsymbol{\Sigma}} = \tfrac{1}{N}\sum_i (\x_i-\hat{\boldsymbol{\mu}})(\x_i-\hat{\boldsymbol{\mu}})^\top$\\[2pt]
+        \textbf{Bernoulli} $\text{Ber}(x|\mu)$: 
+        $$\mu^x(1-\mu)^{1-x}$$\\
+        $\hat{\mu} = \tfrac{1}{N}\sum_i x_i$ \\[2pt]
+        \textbf{Categórica} $\text{Cat}(y|\boldsymbol{\pi})$: 
+        $$\prod_c \pi_c^{\mathbb{I}[y=c]},\quad \sum_c\pi_c=1$$\\
+        $\hat{\pi}_c = \tfrac{N_c}{N}$ \quad (frecuencia de clase $c$)\\[2pt]
+        \textbf{Laplace} $\text{Lap}(x|\mu,b)$: 
+        $$\frac{1}{2b}\exp\!\left(-\frac{|x-\mu|}{b}\right)$$\\
+        $\hat{\mu} = \text{median}(\{x_i\})$ \quad
+        $\hat{b} = \tfrac{1}{N}\sum_i |x_i - \hat{\mu}|$\\[2pt]
+        \textbf{Binomial} $\text{Binom}(k|n,p)$: 
+        $$\binom{n}{k}p^k(1-p)^{n-k}$$
+        $\hat{p} = \tfrac{1}{N}\sum_i \tfrac{k_i}{n}$
+    \end{tcolorbox}
+    % INFORMATION THEORY
+    \begin{tcolorbox}[formulabox=Information Theory, colframe=softTeal]
+        \textbf{Entropy}: $\mathbb{H}(\mathbf{p}) = -\sum_i p_i \log p_i$\\[2pt]
+        \textbf{Cross-E}: $\mathbb{H}_{ce}(\mathbf{p},\mathbf{q}) = -\sum_i p_i \log q_i$ \\
+        \textbf{Binary Cross-E}:
+        $\mathbb{H}_{ce}(p,q) = -[p \log q + (1-p)\log (1-q)]$\\[2pt]
+        \textbf{Joint-E}: $\mathbb{H}(X,Y)=-\sum p(x,y)\log p(x,y)$ \\
+        \textbf{Conditional-E}: $\mathbb{H}(Y|X)= \mathbb{H}(X,Y)-\mathbb{H}(X)$ \\
+        \textbf{Relative-E} (KL divergence)\\
+        $\mathbb{H}(p\|q)=\sum_i p_i\log\tfrac{p_i}{q_i}=\mathbb{H}(p\|q) - \mathbb{H}(p)$\\
+        \textbf{Mutual Information}\\
+        $I(X;Y)=\mathbb{H}(p(x,y)\, \| \, p(x)p(y))$\\
+        $I(X;Y)=0 \Leftrightarrow X \perp Y$\\[2pt]
+    \end{tcolorbox}
+    % LINEAR ALGEBRA
+    \begin{tcolorbox}[formulabox=Linear Algebra, colframe=softOrange]
+        \textbf{SDP}: $\mathbf{A}\succeq 0 \Leftrightarrow \x^\top\mathbf{A}\x \geq 0\ \forall\x$.\quad
+        $\mathbf{A}^\top\mathbf{A},\ \mathbf{A}\mathbf{A}^\top \succeq 0$ siempre\\
+        \textbf{Cond}: $\kappa(\mathbf{A}) = \sigma_{\max}/\sigma_{\min}$, $\kappa(\mathbf{A}^\top\mathbf{A})=\kappa(\mathbf{A})^2$\\
+        \textbf{Precisión}: $\boldsymbol{\Lambda} \triangleq \boldsymbol{\Sigma}^{-1}$\\
+        \textbf{Derivadas conocidas} \\
+        \begin{itemize}
+            \item $\grad_\x (\x^\top\mathbf{A}\x) = 2\mathbf{A}\x$ ($\mathbf{A}$ simétrica)
+            \item $\grad_\x (\mathbf{a}^\top\x) = \mathbf{a}$
+            \item $\grad_{\boldsymbol{\Sigma}} \log|\boldsymbol{\Sigma}| = \boldsymbol{\Sigma}^{-\top}$
+        \end{itemize}        
+        \textbf{Traza}: $\x^\top\mathbf{A}\x = \text{tr}(\mathbf{A}\x\x^\top)$, $\text{tr}(\mathbf{AB})=\text{tr}(\mathbf{BA})$ \\
+        \textbf{Jacobiano}: $\mathbf{J} = \frac{\partial \mathbf{f}}{\partial \x} \in \mathbb{R}^{m\times n}$, $J_{ij} = \frac{\partial f_i}{\partial x_j}$ \\
+        Si $m=1 \implies \mathbf{J} = \grad f^\top$.
+    \end{tcolorbox}
+    % CONVEXITY
+    \begin{tcolorbox}[formulabox=Convexity, colframe=softOrange]
+         $f(\lambda\x+(1-\lambda)\y)\leq\lambda f(\x)+(1-\lambda)f(\y)$\\
+        \textbf{1er orden}: $f(\y)\geq f(\x)+\grad f(\x)^\top(\y-\x)$\\
+        \textbf{2do orden}: $\grad^2 f(\x)\succeq 0\ \forall\x$ (Hessiano SDP)\\
+    \end{tcolorbox}
+    \begin{tcolorbox}[formulabox=Ensemble Methods, colframe=softSlate]
+        \textbf{Bagging}: bootstraping aggregating.\\
+        \textbf{Boosting}: entrenamiento secuencial, ponderar errores. $f_m$ se entrena sobre residuos de $f_{m-1}$
+        \textbf{Random Forest}: Bagging + features bagging por split.\\
+    \end{tcolorbox}
+\end{minipage}
+
+\end{document}

@@ -86,6 +86,7 @@
 \newcommand{\X}{\mathbf{X}}
 \newcommand{\y}{\mathbf{y}}
 \newcommand{\z}{\mathbf{z}}
+\newcommand{\del}{\boldsymbol{\delta}}
 \newcommand{\bias}{\mathbf{b}}
 \newcommand{\preact}{\mathbf{a}}
 \newcommand{\W}{\mathbf{W}}
@@ -114,7 +115,7 @@
         Modelo: $p(y|\x,\boldsymbol{\theta})=\text{Ber}(y|\sigma(\w^\top \x+b))$ \\
         Predicción (prob): $\mu_i = \sigma(\w^\top \x_i)$ \\
         $\Loss = \frac{1}{N} \sum_i \mathbb{H}_{ce}(y_i, \mu_i)$ \\
-        $\grad_\w \Loss = \frac{1}{N} \sum_i (\mu_i - y_i)\x_i = \frac{1}{N}\mathbf{X}^\top(\boldsymbol{\mu} - \y)$\\[5pt]
+        $\grad_\w \Loss = \frac{1}{N} \sum_i (\mu_i - y_i)\x_i = \frac{1}{N}\mathbf{X}^\top(\boldsymbol{\mu} - \y)$\\[3pt]
         \textbf{Multiclase} \\
         Modelo: $p(y|\x,\w)=\text{Cat}(y|\text{Softmax}(\w^\top \x))$ \\
         Predicción (prob): $\boldsymbol{\mu}_i = \text{Softmax}(\w^\top \x_i)$ \\
@@ -152,27 +153,25 @@
     \end{tcolorbox}
     % DECISION TREE
     \begin{tcolorbox}[formulabox=CART, colframe=softRed]
-        $\Loss(\boldsymbol{\theta})= \sum_i \ell(y_i, f(\x_i;\boldsymbol{\theta}))=\sum_j^J \sum_{\x_i \in R_j} \ell(y_i, w_j)$ \\
+        $\Loss(\boldsymbol{\theta})= \sum_i \ell(y_i, f(\x_i;\boldsymbol{\theta}))$\\
         Split (nodo $i$): 
-        $$\arg \min_j \min_t \; \frac{|\mathcal{D}_i^L|}{|\mathcal{D}_i|}C^L(\mathcal{D}_i^L)+\frac{|\mathcal{D}_i^R|}{|\mathcal{D}_i|}C^R(\mathcal{D}_i^R)$$ \\
-        $C(\mathcal{D}_i)$ Regresión = $MSE$ \\
-        $C(\mathcal{D}_i)$ Clasificación:
-        \begin{itemize}
-            \item $G_i = \sum_c \hat{\pi}_{ic}(1-\hat{\pi}_{ic})$
-            \item $H_i = \mathbb{H}(\hat{\boldsymbol{\pi}})= -\sum_c \hat{\pi}_{ic} \log \hat{\pi}_{ic}$
-        \end{itemize}
+        $\arg \min_j \min_t \; \frac{|\mathcal{D}_i^L|}{|\mathcal{D}_i|}C^L(\mathcal{D}_i^L)+\frac{|\mathcal{D}_i^R|}{|\mathcal{D}_i|}C^R(\mathcal{D}_i^R)$ \\
+        Regresión: $C(\mathcal{D}_i)$ = MSE \\
+        Clasificación: $C(\mathcal{D}_i) = G_i = \sum_c \hat{\pi}_{ic}(1-\hat{\pi}_{ic})$ ó $C(\mathcal{D}_i) = H_i = \mathbb{H}(\hat{\boldsymbol{\pi}}_i)=-\sum_{ic} \hat{\pi}_{ic} \log(\hat{\pi}_{ic})$
     \end{tcolorbox}
     % MULTILAYER PERCEPTRON
     \begin{tcolorbox}[formulabox=Multi-layer Perceptron (MLP), colframe=softRed]
-        $\z^{(\ell)} = f^{(\ell)}(\z^{(\ell-1)})= \varphi^{(\ell)}(\preact^{(\ell)})$ : output capa $\ell$\\
-        $\preact^{(\ell)} = \W^{(\ell)} \z^{(\ell-1)} + \bias^{(\ell)}$ : preactivación capa $\ell$ \\
+        $\z^{(\ell)} \in \mathbb{R}^{M^{(\ell)}}$: output capa $\ell$\\
+        $\preact^{(\ell)} \in \mathbb{R}^{M^{(\ell)}}$: preactivación capa $\ell$ \\
+        $\del^{(\ell)} \in \mathbb{R}^{M^{(\ell)}}$: error de propagación en capa $\ell$ \\
+        $\W^{(\ell)} \in \mathbb{R}^{M^{(\ell)}\times M^{(\ell-1)}}$: params entre $\ell$ y $\ell-1$ \\
         \textbf{Back-propagation}
         \begin{algorithmic}[0]
             \Statex \textit{\# Forward-pass}
             \State $\z^{(0)} \leftarrow \x_i$
             \For{$\ell = 1:L$}
                 \State $\preact^{(\ell)} \leftarrow \W^{(\ell)}\z^{(\ell-1)} + \bias^{(\ell)}$
-                \State $\z^{(l)} \leftarrow \varphi^{(\ell)}(\preact^{(\ell)})$
+                \State $\z^{(\ell)} \leftarrow \varphi^{(\ell)}(\preact^{(\ell)})$
             \EndFor
             \State $\hat{\y}_i \leftarrow \z^{(L)}$,\quad $\Loss_i \leftarrow \Loss_i(\y_i, \hat{\y}_i)$
             \Statex \textit{\# Backward-pass}

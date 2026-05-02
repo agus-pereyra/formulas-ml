@@ -1,10 +1,10 @@
 # Fdb version 4
-["xdvipdfmx"] 1777728068.23756 "build/formulas-parcial.xdv" "formulas-parcial.pdf" "formulas-parcial" 1777728068.6444 0
-  "build/formulas-parcial.xdv" 1777728068 90756 73d6f9c3ac3ba4c2672fa722789ed042 "xelatex"
+["xdvipdfmx"] 1777731111.18926 "build/formulas-parcial.xdv" "formulas-parcial.pdf" "formulas-parcial" 1777731111.73351 0
+  "build/formulas-parcial.xdv" 1777731110 91144 b22314f189137d456020433b39e53938 "xelatex"
   (generated)
   "formulas-parcial.pdf"
   (rewritten before read)
-["xelatex"] 1777728066.35464 "c:/UdeSA/SEMESTRE V/Machine Learning & Deep Learning/Fórmulas Parcial/formulas-parcial.tex" "build/formulas-parcial.xdv" "formulas-parcial" 1777728068.63415 0
+["xelatex"] 1777731109.08635 "c:/UdeSA/SEMESTRE V/Machine Learning & Deep Learning/Fórmulas Parcial/formulas-parcial.tex" "build/formulas-parcial.xdv" "formulas-parcial" 1777731111.72132 0
   "C:/Users/agust/AppData/Local/MiKTeX/miktex/data/le/xetex/xelatex.fmt" 1773092892 27177066 bd6c5ad6b97ba26e8a46f0d1d6aa9379 ""
   "C:/Users/agust/AppData/Local/Programs/MiKTeX/fonts/tfm/public/amsfonts/cmextra/cmbsy5.tfm" 1233951848 1120 1e8878807317373affa7f7bba4cf2f6a ""
   "C:/Users/agust/AppData/Local/Programs/MiKTeX/fonts/tfm/public/amsfonts/cmextra/cmbsy6.tfm" 1233951848 1124 14ccf5552bc7f77ca02a8a402bea8bfb ""
@@ -176,9 +176,9 @@
   "C:/Users/agust/AppData/Local/Programs/MiKTeX/tex/latex/tools/verbatim.sty" 1761901070 7532 26d26e9d8f2ca784270d5da8ec7d102b ""
   "C:/Users/agust/AppData/Local/Programs/MiKTeX/tex/latex/trimspaces/trimspaces.sty" 1253169183 1380 971a51b00a14503ddf754cab24c3f209 ""
   "C:/Users/agust/AppData/Local/Programs/MiKTeX/tex/latex/xcolor/xcolor.sty" 1729265222 55384 b454dec21c2d9f45ec0b793f0995b992 ""
-  "build/formulas-parcial.aux" 1777728068 32 3985256e7290058c681f74d7a3565a19 "xelatex"
-  "c:/UdeSA/SEMESTRE V/Machine Learning & Deep Learning/Fórmulas Parcial/formulas-parcial.tex" 1777728063 19257 6690e9b1c7049e6e7d5d7b563ccdb42c ""
-  "formulas-parcial.tex" 1777728063 19257 6690e9b1c7049e6e7d5d7b563ccdb42c ""
+  "build/formulas-parcial.aux" 1777731110 32 3985256e7290058c681f74d7a3565a19 "xelatex"
+  "c:/UdeSA/SEMESTRE V/Machine Learning & Deep Learning/Fórmulas Parcial/formulas-parcial.tex" 1777731108 19337 2a7c6275d55b6277dc5ae69208c55f7b ""
+  "formulas-parcial.tex" 1777731108 19337 2a7c6275d55b6277dc5ae69208c55f7b ""
   (generated)
   "build/formulas-parcial.aux"
   "build/formulas-parcial.log"

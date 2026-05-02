@@ -109,10 +109,10 @@
     \end{tcolorbox}
     % MULTILAYER PERCEPTRON
     \begin{tcolorbox}[formulabox=Multi-layer Perceptron (MLP), colframe=softRed]
-        $\z^{(\ell)} \in \mathbb{R}^{M^{(\ell)}}$: output/activación capa $\ell$\\
-        $\preact^{(\ell)} \in \mathbb{R}^{M^{(\ell)}}$: preactivación capa $\ell$ \\
-        $\del^{(\ell)} \in \mathbb{R}^{M^{(\ell)}}$: error de propagación en capa $\ell$ \\
-        $\W^{(\ell)} \in \mathbb{R}^{M^{(\ell)}\times M^{(\ell-1)}}$: params entre $\ell$ y $\ell-1$ \\
+        $\z^{(\ell)} \in \mathbb{R}^{M^{(\ell)}}$, $\del^{(\ell)} =\mathbf{J}^{(\ell)} \boldsymbol{\delta}^{(\ell-1)}\in \mathbb{R}^{M^{(\ell)}}$: $\varepsilon$ de propagación en capa $\ell$\\
+        $\mathbf{J}^{(\ell)}=\tfrac{\partial \z^{(\ell)}}{\partial \z^{(\ell-1)}}=\text{diag}(\varphi'^{(\ell)}(\preact^{(\ell)}))\cdot\W^{(\ell)}$ \\
+        $\W^{(\ell)} \in \mathbb{R}^{M^{(\ell)}\times M^{(\ell-1)}}$ \\
+        $\tfrac{\partial \Loss_i}{\partial \W^{(\ell)}}= \tfrac{\partial \Loss_i}{\partial \z^{(\ell)}} \tfrac{\partial \z^{(\ell)}}{\partial \preact^{(\ell)}} \tfrac{\partial \preact^{(\ell)}}{\partial \W^{(\ell)}}$ \\
         \vspace{-2mm}
         \tcbline
         \vspace{-2mm}
@@ -126,12 +126,13 @@
             \EndFor
             \State $\hat{\y}_i \leftarrow \z^{(L)}$,\quad $\Loss_i \leftarrow \Loss_i(\y_i, \hat{\y}_i)$
             \Statex \textit{\# Backward-pass}
-            \State $\delta^{(L)} \leftarrow \varphi'^{(L)}(\preact^{(L)}) \odot \frac{\partial \Loss_i}{\partial \hat{\y}_i}$
-            \State $\frac{\partial \Loss_i}{\partial \W^{(L)}} \leftarrow \delta^{(L)} \z^{(L-1)\top}$
+            \State $\boldsymbol{\delta}^{(L)} \leftarrow \varphi'^{(L)}(\preact^{(L)}) \odot \frac{\partial \Loss_i}{\partial \hat{\y}_i}$
+            \State $\frac{\partial \Loss_i}{\partial \W^{(L)}} \leftarrow \boldsymbol{\delta}^{(L)} \z^{(L-1)\top}$
+            \State $\frac{\partial \Loss_i}{\partial \bias^{(L)}} \leftarrow \boldsymbol{\delta}^{(L)}$
             \For{$l = L-1:1$}
-                \State $\delta^{(\ell)} \leftarrow \varphi'^{(\ell)}(\preact^{(\ell)}) \odot \W^{(\ell+1)\top}\delta^{(\ell+1)}$
-                \State $\frac{\partial \Loss_i}{\partial \W^{(\ell)}} \leftarrow \delta^{(\ell)} \z^{(\ell-1)\top}$
-                \State $\frac{\partial \Loss_i}{\partial \bias^{(l)}} \leftarrow \delta^{(\ell)}$
+                \State $\boldsymbol{\delta}^{(\ell)} \leftarrow \varphi'^{(\ell)}(\preact^{(\ell)}) \odot \W^{(\ell+1)\top}\boldsymbol{\delta}^{(\ell+1)}$
+                \State $\frac{\partial \Loss_i}{\partial \W^{(\ell)}} \leftarrow \boldsymbol{\delta}^{(\ell)} \z^{(\ell-1)\top}$
+                \State $\frac{\partial \Loss_i}{\partial \bias^{(l)}} \leftarrow \boldsymbol{\delta}^{(\ell)}$
             \EndFor
         \end{algorithmic}
     \end{tcolorbox}
@@ -238,8 +239,8 @@
         $\hat{z}^{(\ell)} = \tfrac{z^{(\ell)} - \mu}{\sqrt{\sigma^2+\varepsilon}}$,\quad
         $\tilde{z}^{(\ell)} = \gamma\hat{z}^{(\ell)} + \beta$\\
         \textbf{Glorot/Xavier initialization} \\
-        $w_{ij}\sim \mathcal{N}(0,\sigma^2)$ con $\sigma^2 = 2/(n_{\text{in}}+n_{\text{out}})$
-        \textbf{Activaciones sin saturación}: ReLU, Leaky ReLU (evitan saturación) \\
+        $w_{ij}\sim \mathcal{N}(0,\sigma^2)$ con $\sigma^2 = 2/(n_{\text{in}}+n_{\text{out}})$ \\
+        \textbf{$\boldsymbol{\varphi}$ sin saturación}: ReLU, Leaky ReLU, etc \\
         \textbf{Gradient clipping}: $\mathbf{g} = \min\left(0, \tfrac{c}{\|\mathbf{g}\|}\right)\mathbf{g}$ \\
     \end{tcolorbox}
     % MAP
@@ -252,9 +253,11 @@
         
     \end{tcolorbox}
     % BAYES
-    \begin{tcolorbox}[formulabox=Bayes (\textit{posterior} $\propto$ \textit{likelihood} $\times$ \textit{prior}), colframe=softTeal]
+    \begin{tcolorbox}[formulabox=Bayes, colframe=softTeal]
+        \centering
         $p(\w|\mathcal{D}) = \dfrac{p(\mathcal{D}|\w)\,p(\w)}{p(\mathcal{D})}
         \propto p(\mathcal{D}|\w)\,p(\w)$\\[2pt]
+        \textit{posterior} $\propto$ \textit{likelihood} $\times$ \textit{prior}
     \end{tcolorbox}
     % INFORMATION THEORY
     \begin{tcolorbox}[formulabox=Information Theory, colframe=softTeal]

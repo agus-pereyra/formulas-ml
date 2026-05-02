@@ -1,4 +1,4 @@
-This is XeTeX, Version 3.141592653-2.6-0.999998 (MiKTeX 26.2) (preloaded format=xelatex 2026.3.9)  2 MAY 2026 14:19
+This is XeTeX, Version 3.141592653-2.6-0.999998 (MiKTeX 26.2) (preloaded format=xelatex 2026.3.9)  2 MAY 2026 20:21
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -710,12 +710,12 @@ L3 programming layer <2026-01-19>
  ***********
  ) 
 Here is how much of TeX's memory you used:
- 24352 strings out of 402983
- 503794 string characters out of 5448483
- 1090548 words of memory out of 5000000
- 52663 multiletter control sequences out of 15000+600000
- 636785 words of font info for 84 fonts, out of 8000000 for 9000
+ 24348 strings out of 402983
+ 503677 string characters out of 5448483
+ 1092736 words of memory out of 5000000
+ 52661 multiletter control sequences out of 15000+600000
+ 636777 words of font info for 83 fonts, out of 8000000 for 9000
  1348 hyphenation exceptions out of 8191
  116i,11n,121p,1277b,867s stack positions out of 10000i,1000n,20000p,200000b,200000s
 
-Output written on c:\UdeSA\SEMESTRE V\Machine Learning & Deep Learning\Fórmulas Parcial\build\formulas-parcial.xdv (1 page, 99032 bytes).
+Output written on c:\UdeSA\SEMESTRE V\Machine Learning & Deep Learning\Fórmulas Parcial\build\formulas-parcial.xdv (1 page, 98460 bytes).

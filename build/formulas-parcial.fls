@@ -1,5 +1,5 @@
 PWD c:\UdeSA\SEMESTRE V\Machine Learning & Deep Learning\Fórmulas Parcial
-INPUT C:\Users\agust\AppData\Local\MiKTeX\miktex\data\le\xetex\xelatex.fmt
+INPUT C:\Users\agust\AppData\Local\MiKTeX\miktex\data\le\pdftex\pdflatex.fmt
 INPUT c:\UdeSA\SEMESTRE V\Machine Learning & Deep Learning\Fórmulas Parcial\formulas-parcial.tex
 OUTPUT c:\UdeSA\SEMESTRE V\Machine Learning & Deep Learning\Fórmulas Parcial\build\formulas-parcial.log
 INPUT C:\Users\agust\AppData\Local\Programs\MiKTeX\tex\latex\base\article.cls
@@ -7,6 +7,7 @@ INPUT C:\Users\agust\AppData\Local\Programs\MiKTeX\tex\latex\base\article.cls
 INPUT C:\Users\agust\AppData\Local\Programs\MiKTeX\tex\latex\base\size11.clo
 INPUT C:\Users\agust\AppData\Local\Programs\MiKTeX\tex\latex\base\size11.clo
 INPUT C:\Users\agust\AppData\Local\Programs\MiKTeX\tex\latex\base\size11.clo
+INPUT C:\Users\agust\AppData\Local\Programs\MiKTeX\fonts\tfm\public\cm\cmr10.tfm
 INPUT C:\Users\agust\AppData\Local\Programs\MiKTeX\tex\latex\geometry\geometry.sty
 INPUT C:\Users\agust\AppData\Local\Programs\MiKTeX\tex\latex\geometry\geometry.sty
 INPUT C:\Users\agust\AppData\Local\Programs\MiKTeX\tex\latex\graphics\keyval.sty
@@ -40,9 +41,9 @@ INPUT C:\Users\agust\AppData\Local\Programs\MiKTeX\tex\latex\microtype\microtype
 INPUT C:\Users\agust\AppData\Local\Programs\MiKTeX\tex\latex\microtype\microtype.sty
 INPUT C:\Users\agust\AppData\Local\Programs\MiKTeX\tex\latex\etoolbox\etoolbox.sty
 INPUT C:\Users\agust\AppData\Local\Programs\MiKTeX\tex\latex\etoolbox\etoolbox.sty
-INPUT C:\Users\agust\AppData\Local\Programs\MiKTeX\tex\latex\microtype\microtype-xetex.def
-INPUT C:\Users\agust\AppData\Local\Programs\MiKTeX\tex\latex\microtype\microtype-xetex.def
-INPUT C:\Users\agust\AppData\Local\Programs\MiKTeX\tex\latex\microtype\microtype-xetex.def
+INPUT C:\Users\agust\AppData\Local\Programs\MiKTeX\tex\latex\microtype\microtype-pdftex.def
+INPUT C:\Users\agust\AppData\Local\Programs\MiKTeX\tex\latex\microtype\microtype-pdftex.def
+INPUT C:\Users\agust\AppData\Local\Programs\MiKTeX\tex\latex\microtype\microtype-pdftex.def
 INPUT C:\Users\agust\AppData\Local\Programs\MiKTeX\tex\latex\microtype\microtype.cfg
 INPUT C:\Users\agust\AppData\Local\Programs\MiKTeX\tex\latex\microtype\microtype.cfg
 INPUT C:\Users\agust\AppData\Local\Programs\MiKTeX\tex\latex\microtype\microtype.cfg
@@ -64,8 +65,8 @@ INPUT C:\Users\agust\AppData\Local\Programs\MiKTeX\tex\latex\l3packages\xparse\x
 INPUT C:\Users\agust\AppData\Local\Programs\MiKTeX\tex\latex\l3packages\xparse\xparse.sty
 INPUT C:\Users\agust\AppData\Local\Programs\MiKTeX\tex\latex\l3kernel\expl3.sty
 INPUT C:\Users\agust\AppData\Local\Programs\MiKTeX\tex\latex\l3kernel\expl3.sty
-INPUT C:\Users\agust\AppData\Local\Programs\MiKTeX\tex\latex\l3backend\l3backend-xetex.def
-INPUT C:\Users\agust\AppData\Local\Programs\MiKTeX\tex\latex\l3backend\l3backend-xetex.def
+INPUT C:\Users\agust\AppData\Local\Programs\MiKTeX\tex\latex\l3backend\l3backend-pdftex.def
+INPUT C:\Users\agust\AppData\Local\Programs\MiKTeX\tex\latex\l3backend\l3backend-pdftex.def
 INPUT C:\Users\agust\AppData\Local\Programs\MiKTeX\tex\latex\algorithmicx\algorithmicx.sty
 INPUT C:\Users\agust\AppData\Local\Programs\MiKTeX\tex\latex\algorithmicx\algorithmicx.sty
 INPUT C:\Users\agust\AppData\Local\Programs\MiKTeX\tex\latex\base\ifthen.sty
@@ -98,9 +99,9 @@ INPUT C:\Users\agust\AppData\Local\Programs\MiKTeX\tex\latex\graphics\trig.sty
 INPUT C:\Users\agust\AppData\Local\Programs\MiKTeX\tex\latex\graphics-cfg\graphics.cfg
 INPUT C:\Users\agust\AppData\Local\Programs\MiKTeX\tex\latex\graphics-cfg\graphics.cfg
 INPUT C:\Users\agust\AppData\Local\Programs\MiKTeX\tex\latex\graphics-cfg\graphics.cfg
-INPUT C:\Users\agust\AppData\Local\Programs\MiKTeX\tex\latex\graphics-def\xetex.def
-INPUT C:\Users\agust\AppData\Local\Programs\MiKTeX\tex\latex\graphics-def\xetex.def
-INPUT C:\Users\agust\AppData\Local\Programs\MiKTeX\tex\latex\graphics-def\xetex.def
+INPUT C:\Users\agust\AppData\Local\Programs\MiKTeX\tex\latex\graphics-def\pdftex.def
+INPUT C:\Users\agust\AppData\Local\Programs\MiKTeX\tex\latex\graphics-def\pdftex.def
+INPUT C:\Users\agust\AppData\Local\Programs\MiKTeX\tex\latex\graphics-def\pdftex.def
 INPUT C:\Users\agust\AppData\Local\Programs\MiKTeX\tex\latex\pgf\systemlayer\pgfsys.sty
 INPUT C:\Users\agust\AppData\Local\Programs\MiKTeX\tex\latex\pgf\systemlayer\pgfsys.sty
 INPUT C:\Users\agust\AppData\Local\Programs\MiKTeX\tex\generic\pgf\systemlayer\pgfsys.code.tex
@@ -109,9 +110,8 @@ INPUT C:\Users\agust\AppData\Local\Programs\MiKTeX\tex\generic\pgf\systemlayer\p
 INPUT C:\Users\agust\AppData\Local\Programs\MiKTeX\tex\generic\pgf\utilities\pgfkeys.code.tex
 INPUT C:\Users\agust\AppData\Local\Programs\MiKTeX\tex\generic\pgf\utilities\pgfkeyslibraryfiltered.code.tex
 INPUT C:\Users\agust\AppData\Local\Programs\MiKTeX\tex\generic\pgf\systemlayer\pgf.cfg
-INPUT C:\Users\agust\AppData\Local\Programs\MiKTeX\tex\generic\pgf\systemlayer\pgfsys-xetex.def
-INPUT C:\Users\agust\AppData\Local\Programs\MiKTeX\tex\generic\pgf\systemlayer\pgfsys-xetex.def
-INPUT C:\Users\agust\AppData\Local\Programs\MiKTeX\tex\generic\pgf\systemlayer\pgfsys-dvipdfmx.def
+INPUT C:\Users\agust\AppData\Local\Programs\MiKTeX\tex\generic\pgf\systemlayer\pgfsys-pdftex.def
+INPUT C:\Users\agust\AppData\Local\Programs\MiKTeX\tex\generic\pgf\systemlayer\pgfsys-pdftex.def
 INPUT C:\Users\agust\AppData\Local\Programs\MiKTeX\tex\generic\pgf\systemlayer\pgfsys-common-pdf.def
 INPUT C:\Users\agust\AppData\Local\Programs\MiKTeX\tex\generic\pgf\systemlayer\pgfsyssoftpath.code.tex
 INPUT C:\Users\agust\AppData\Local\Programs\MiKTeX\tex\generic\pgf\systemlayer\pgfsyssoftpath.code.tex
@@ -209,6 +209,7 @@ INPUT C:\Users\agust\AppData\Local\Programs\MiKTeX\tex\latex\pdfcol\pdfcol.sty
 INPUT C:\Users\agust\AppData\Local\Programs\MiKTeX\tex\latex\pdfcol\pdfcol.sty
 INPUT C:\Users\agust\AppData\Local\Programs\MiKTeX\tex\generic\infwarerr\infwarerr.sty
 INPUT C:\Users\agust\AppData\Local\Programs\MiKTeX\tex\generic\infwarerr\infwarerr.sty
+INPUT C:\Users\agust\AppData\Local\Programs\MiKTeX\tex\latex\graphics\color.sty
 INPUT C:\Users\agust\AppData\Local\Programs\MiKTeX\tex\latex\tcolorbox\tcbhooks.code.tex
 INPUT C:\Users\agust\AppData\Local\Programs\MiKTeX\tex\latex\tcolorbox\tcbtheorems.code.tex
 INPUT C:\Users\agust\AppData\Local\Programs\MiKTeX\tex\latex\tcolorbox\tcbfitting.code.tex
@@ -227,6 +228,14 @@ INPUT C:\Users\agust\AppData\Local\Programs\MiKTeX\tex\latex\listings\listings.c
 INPUT C:\Users\agust\AppData\Local\Programs\MiKTeX\tex\latex\listings\listings.cfg
 INPUT C:\Users\agust\AppData\Local\Programs\MiKTeX\tex\latex\tcolorbox\tcblistingscore.code.tex
 INPUT C:\Users\agust\AppData\Local\Programs\MiKTeX\tex\latex\tcolorbox\tcbprocessing.code.tex
+INPUT C:\Users\agust\AppData\Local\Programs\MiKTeX\tex\latex\listingsutf8\listingsutf8.sty
+INPUT C:\Users\agust\AppData\Local\Programs\MiKTeX\tex\latex\listingsutf8\listingsutf8.sty
+INPUT C:\Users\agust\AppData\Local\Programs\MiKTeX\tex\generic\pdftexcmds\pdftexcmds.sty
+INPUT C:\Users\agust\AppData\Local\Programs\MiKTeX\tex\generic\pdftexcmds\pdftexcmds.sty
+INPUT C:\Users\agust\AppData\Local\Programs\MiKTeX\tex\generic\stringenc\stringenc.sty
+INPUT C:\Users\agust\AppData\Local\Programs\MiKTeX\tex\generic\stringenc\stringenc.sty
+INPUT C:\Users\agust\AppData\Local\Programs\MiKTeX\tex\generic\pdfescape\pdfescape.sty
+INPUT C:\Users\agust\AppData\Local\Programs\MiKTeX\tex\generic\pdfescape\pdfescape.sty
 INPUT C:\Users\agust\AppData\Local\Programs\MiKTeX\tex\latex\tcolorbox\tcbexternal.code.tex
 INPUT C:\Users\agust\AppData\Local\Programs\MiKTeX\tex\latex\tcolorbox\tcbmagazine.code.tex
 INPUT C:\Users\agust\AppData\Local\Programs\MiKTeX\tex\latex\tcolorbox\tcbvignette.code.tex
@@ -234,6 +243,7 @@ INPUT C:\Users\agust\AppData\Local\Programs\MiKTeX\tex\generic\pgf\frontendlayer
 INPUT C:\Users\agust\AppData\Local\Programs\MiKTeX\tex\generic\pgf\frontendlayer\tikz\libraries\tikzlibraryfadings.code.tex
 INPUT C:\Users\agust\AppData\Local\Programs\MiKTeX\tex\generic\pgf\libraries\pgflibraryfadings.code.tex
 INPUT C:\Users\agust\AppData\Local\Programs\MiKTeX\tex\generic\pgf\libraries\pgflibraryfadings.code.tex
+OUTPUT c:\UdeSA\SEMESTRE V\Machine Learning & Deep Learning\Fórmulas Parcial\build\formulas-parcial.pdf
 INPUT C:\Users\agust\AppData\Local\Programs\MiKTeX\tex\latex\tcolorbox\tcbposter.code.tex
 INPUT C:\Users\agust\AppData\Local\Programs\MiKTeX\tex\latex\graphics\dvipsnam.def
 INPUT C:\Users\agust\AppData\Local\Programs\MiKTeX\tex\latex\graphics\dvipsnam.def
@@ -242,13 +252,22 @@ INPUT c:\UdeSA\SEMESTRE V\Machine Learning & Deep Learning\Fórmulas Parcial\bui
 INPUT c:\UdeSA\SEMESTRE V\Machine Learning & Deep Learning\Fórmulas Parcial\build\formulas-parcial.aux
 INPUT c:\UdeSA\SEMESTRE V\Machine Learning & Deep Learning\Fórmulas Parcial\build\formulas-parcial.aux
 OUTPUT c:\UdeSA\SEMESTRE V\Machine Learning & Deep Learning\Fórmulas Parcial\build\formulas-parcial.aux
-INPUT C:\Users\agust\AppData\Local\Programs\MiKTeX\tex\latex\microtype\mt-LatinModernRoman.cfg
-INPUT C:\Users\agust\AppData\Local\Programs\MiKTeX\tex\latex\microtype\mt-LatinModernRoman.cfg
-INPUT C:\Users\agust\AppData\Local\Programs\MiKTeX\tex\latex\microtype\mt-LatinModernRoman.cfg
+INPUT C:\Users\agust\AppData\Local\Programs\MiKTeX\tex\latex\microtype\mt-cmr.cfg
+INPUT C:\Users\agust\AppData\Local\Programs\MiKTeX\tex\latex\microtype\mt-cmr.cfg
+INPUT C:\Users\agust\AppData\Local\Programs\MiKTeX\tex\latex\microtype\mt-cmr.cfg
+INPUT C:\Users\agust\AppData\Local\Programs\MiKTeX\tex\context\base\mkii\supp-pdf.mkii
+INPUT C:\Users\agust\AppData\Local\Programs\MiKTeX\tex\context\base\mkii\supp-pdf.mkii
+INPUT C:\Users\agust\AppData\Local\Programs\MiKTeX\tex\context\base\mkii\supp-pdf.mkii
+INPUT C:\Users\agust\AppData\Local\Programs\MiKTeX\tex\latex\epstopdf-pkg\epstopdf-base.sty
+INPUT C:\Users\agust\AppData\Local\Programs\MiKTeX\tex\latex\epstopdf-pkg\epstopdf-base.sty
+INPUT C:\Users\agust\AppData\Local\Programs\MiKTeX\tex\latex\00miktex\epstopdf-sys.cfg
+INPUT C:\Users\agust\AppData\Local\Programs\MiKTeX\tex\latex\00miktex\epstopdf-sys.cfg
+INPUT C:\Users\agust\AppData\Local\Programs\MiKTeX\tex\latex\00miktex\epstopdf-sys.cfg
+INPUT C:\Users\agust\AppData\Local\Programs\MiKTeX\tex\latex\base\inputenc.sty
+INPUT C:\Users\agust\AppData\Local\Programs\MiKTeX\tex\latex\base\inputenc.sty
+INPUT C:\Users\agust\AppData\Local\Programs\MiKTeX\fonts\tfm\public\cm\cmbx10.tfm
+INPUT C:\Users\agust\AppData\Local\Programs\MiKTeX\fonts\tfm\public\cm\cmbx9.tfm
 INPUT C:\Users\agust\AppData\Local\Programs\MiKTeX\fonts\tfm\public\cm\cmr8.tfm
-INPUT C:\Users\agust\AppData\Local\Programs\MiKTeX\tex\latex\microtype\mt-cmr.cfg
-INPUT C:\Users\agust\AppData\Local\Programs\MiKTeX\tex\latex\microtype\mt-cmr.cfg
-INPUT C:\Users\agust\AppData\Local\Programs\MiKTeX\tex\latex\microtype\mt-cmr.cfg
 INPUT C:\Users\agust\AppData\Local\Programs\MiKTeX\fonts\tfm\public\cm\cmr6.tfm
 INPUT C:\Users\agust\AppData\Local\Programs\MiKTeX\fonts\tfm\public\cm\cmmi8.tfm
 INPUT C:\Users\agust\AppData\Local\Programs\MiKTeX\fonts\tfm\public\cm\cmmi6.tfm
@@ -284,14 +303,63 @@ INPUT C:\Users\agust\AppData\Local\Programs\MiKTeX\fonts\tfm\public\amsfonts\cme
 INPUT C:\Users\agust\AppData\Local\Programs\MiKTeX\fonts\tfm\public\amsfonts\cmextra\cmbsy8.tfm
 INPUT C:\Users\agust\AppData\Local\Programs\MiKTeX\fonts\tfm\public\amsfonts\cmextra\cmbsy6.tfm
 INPUT C:\Users\agust\AppData\Local\Programs\MiKTeX\fonts\tfm\public\amsfonts\cmextra\cmbsy5.tfm
+INPUT C:\Users\agust\AppData\Local\Programs\MiKTeX\fonts\tfm\public\cm\cmti8.tfm
 INPUT C:\Users\agust\AppData\Local\Programs\MiKTeX\fonts\tfm\public\cm\cmr9.tfm
 INPUT C:\Users\agust\AppData\Local\Programs\MiKTeX\fonts\tfm\public\cm\cmmi9.tfm
 INPUT C:\Users\agust\AppData\Local\Programs\MiKTeX\fonts\tfm\public\cm\cmsy9.tfm
 INPUT C:\Users\agust\AppData\Local\Programs\MiKTeX\fonts\tfm\public\amsfonts\cmextra\cmex9.tfm
 INPUT C:\Users\agust\AppData\Local\Programs\MiKTeX\fonts\tfm\public\amsfonts\symbols\msam10.tfm
 INPUT C:\Users\agust\AppData\Local\Programs\MiKTeX\fonts\tfm\public\amsfonts\symbols\msbm10.tfm
-INPUT C:\Users\agust\AppData\Local\Programs\MiKTeX\fonts\tfm\public\cm\cmbx9.tfm
 INPUT C:\Users\agust\AppData\Local\Programs\MiKTeX\fonts\tfm\public\amsfonts\cmextra\cmmib9.tfm
 INPUT C:\Users\agust\AppData\Local\Programs\MiKTeX\fonts\tfm\public\amsfonts\cmextra\cmbsy9.tfm
-OUTPUT c:\UdeSA\SEMESTRE V\Machine Learning & Deep Learning\Fórmulas Parcial\build\formulas-parcial.xdv
+INPUT C:\Users\agust\AppData\Local\Programs\MiKTeX\fonts\tfm\jknappen\ec\tcrm0800.tfm
+INPUT C:\Users\agust\AppData\Local\MiKTeX\fonts\map\pdftex\pdftex.map
 INPUT c:\UdeSA\SEMESTRE V\Machine Learning & Deep Learning\Fórmulas Parcial\build\formulas-parcial.aux
+INPUT C:\Users\agust\AppData\Local\MiKTeX\fonts\pk\ljfour\jknappen\ec\dpi600\tcrm0800.pk
+INPUT C:\Users\agust\AppData\Local\MiKTeX\fonts\pk\ljfour\jknappen\ec\dpi600\tcrm0800.pk
+INPUT C:\Users\agust\AppData\Local\Programs\MiKTeX\fonts\type1\public\amsfonts\cmextra\cmbsy8.pfb
+INPUT C:\Users\agust\AppData\Local\Programs\MiKTeX\fonts\type1\public\amsfonts\cmextra\cmbsy8.pfb
+INPUT C:\Users\agust\AppData\Local\Programs\MiKTeX\fonts\type1\public\amsfonts\cmextra\cmbsy9.pfb
+INPUT C:\Users\agust\AppData\Local\Programs\MiKTeX\fonts\type1\public\amsfonts\cmextra\cmbsy9.pfb
+INPUT C:\Users\agust\AppData\Local\Programs\MiKTeX\fonts\type1\public\amsfonts\cm\cmbx6.pfb
+INPUT C:\Users\agust\AppData\Local\Programs\MiKTeX\fonts\type1\public\amsfonts\cm\cmbx6.pfb
+INPUT C:\Users\agust\AppData\Local\Programs\MiKTeX\fonts\type1\public\amsfonts\cm\cmbx8.pfb
+INPUT C:\Users\agust\AppData\Local\Programs\MiKTeX\fonts\type1\public\amsfonts\cm\cmbx8.pfb
+INPUT C:\Users\agust\AppData\Local\Programs\MiKTeX\fonts\type1\public\amsfonts\cm\cmbx9.pfb
+INPUT C:\Users\agust\AppData\Local\Programs\MiKTeX\fonts\type1\public\amsfonts\cm\cmbx9.pfb
+INPUT C:\Users\agust\AppData\Local\Programs\MiKTeX\fonts\type1\public\amsfonts\cmextra\cmex8.pfb
+INPUT C:\Users\agust\AppData\Local\Programs\MiKTeX\fonts\type1\public\amsfonts\cmextra\cmex8.pfb
+INPUT C:\Users\agust\AppData\Local\Programs\MiKTeX\fonts\type1\public\amsfonts\cm\cmmi5.pfb
+INPUT C:\Users\agust\AppData\Local\Programs\MiKTeX\fonts\type1\public\amsfonts\cm\cmmi5.pfb
+INPUT C:\Users\agust\AppData\Local\Programs\MiKTeX\fonts\type1\public\amsfonts\cm\cmmi6.pfb
+INPUT C:\Users\agust\AppData\Local\Programs\MiKTeX\fonts\type1\public\amsfonts\cm\cmmi6.pfb
+INPUT C:\Users\agust\AppData\Local\Programs\MiKTeX\fonts\type1\public\amsfonts\cm\cmmi8.pfb
+INPUT C:\Users\agust\AppData\Local\Programs\MiKTeX\fonts\type1\public\amsfonts\cm\cmmi8.pfb
+INPUT C:\Users\agust\AppData\Local\Programs\MiKTeX\fonts\type1\public\amsfonts\cm\cmmi9.pfb
+INPUT C:\Users\agust\AppData\Local\Programs\MiKTeX\fonts\type1\public\amsfonts\cm\cmmi9.pfb
+INPUT C:\Users\agust\AppData\Local\Programs\MiKTeX\fonts\type1\public\amsfonts\cmextra\cmmib8.pfb
+INPUT C:\Users\agust\AppData\Local\Programs\MiKTeX\fonts\type1\public\amsfonts\cmextra\cmmib8.pfb
+INPUT C:\Users\agust\AppData\Local\Programs\MiKTeX\fonts\type1\public\amsfonts\cm\cmr10.pfb
+INPUT C:\Users\agust\AppData\Local\Programs\MiKTeX\fonts\type1\public\amsfonts\cm\cmr10.pfb
+INPUT C:\Users\agust\AppData\Local\Programs\MiKTeX\fonts\type1\public\amsfonts\cm\cmr5.pfb
+INPUT C:\Users\agust\AppData\Local\Programs\MiKTeX\fonts\type1\public\amsfonts\cm\cmr5.pfb
+INPUT C:\Users\agust\AppData\Local\Programs\MiKTeX\fonts\type1\public\amsfonts\cm\cmr6.pfb
+INPUT C:\Users\agust\AppData\Local\Programs\MiKTeX\fonts\type1\public\amsfonts\cm\cmr6.pfb
+INPUT C:\Users\agust\AppData\Local\Programs\MiKTeX\fonts\type1\public\amsfonts\cm\cmr8.pfb
+INPUT C:\Users\agust\AppData\Local\Programs\MiKTeX\fonts\type1\public\amsfonts\cm\cmr8.pfb
+INPUT C:\Users\agust\AppData\Local\Programs\MiKTeX\fonts\type1\public\amsfonts\cm\cmr9.pfb
+INPUT C:\Users\agust\AppData\Local\Programs\MiKTeX\fonts\type1\public\amsfonts\cm\cmr9.pfb
+INPUT C:\Users\agust\AppData\Local\Programs\MiKTeX\fonts\type1\public\amsfonts\cm\cmsy5.pfb
+INPUT C:\Users\agust\AppData\Local\Programs\MiKTeX\fonts\type1\public\amsfonts\cm\cmsy5.pfb
+INPUT C:\Users\agust\AppData\Local\Programs\MiKTeX\fonts\type1\public\amsfonts\cm\cmsy6.pfb
+INPUT C:\Users\agust\AppData\Local\Programs\MiKTeX\fonts\type1\public\amsfonts\cm\cmsy6.pfb
+INPUT C:\Users\agust\AppData\Local\Programs\MiKTeX\fonts\type1\public\amsfonts\cm\cmsy8.pfb
+INPUT C:\Users\agust\AppData\Local\Programs\MiKTeX\fonts\type1\public\amsfonts\cm\cmsy8.pfb
+INPUT C:\Users\agust\AppData\Local\Programs\MiKTeX\fonts\type1\public\amsfonts\cm\cmti8.pfb
+INPUT C:\Users\agust\AppData\Local\Programs\MiKTeX\fonts\type1\public\amsfonts\cm\cmti8.pfb
+INPUT C:\Users\agust\AppData\Local\Programs\MiKTeX\fonts\type1\public\amsfonts\symbols\msam10.pfb
+INPUT C:\Users\agust\AppData\Local\Programs\MiKTeX\fonts\type1\public\amsfonts\symbols\msam10.pfb
+INPUT C:\Users\agust\AppData\Local\Programs\MiKTeX\fonts\type1\public\amsfonts\symbols\msbm10.pfb
+INPUT C:\Users\agust\AppData\Local\Programs\MiKTeX\fonts\type1\public\amsfonts\symbols\msbm10.pfb
+INPUT C:\Users\agust\AppData\Local\Programs\MiKTeX\fonts\type1\public\amsfonts\symbols\msbm7.pfb
+INPUT C:\Users\agust\AppData\Local\Programs\MiKTeX\fonts\type1\public\amsfonts\symbols\msbm7.pfb

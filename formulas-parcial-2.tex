@@ -1,0 +1,365 @@
+\documentclass[10pt, a4paper]{article}
+
+% márgen + layout
+\usepackage[a4paper, margin=3mm, top=3mm, bottom=3mm]{geometry}
+\usepackage{multicol}
+\setlength{\columnsep}{2mm}
+\setlength{\columnseprule}{0.3pt}
+
+% matemática
+\usepackage{amsmath, amssymb, bm}
+
+% tipografía
+\usepackage{microtype}
+\usepackage{parskip}
+\setlength{\parskip}{0pt}
+\setlength{\parindent}{0pt}
+
+% títulos compactos
+\usepackage{titlesec}
+\titlespacing{\section}{0pt}{2pt}{1pt}
+\titlespacing{\subsection}{0pt}{1pt}{0pt}
+\titleformat{\section}{\small\bfseries\centering}{}{0em}{}[\hrule]
+\titleformat{\subsection}{\footnotesize\bfseries}{}{0em}{}
+
+% espaciado ecuaciones
+\setlength{\abovedisplayskip}{1pt}
+\setlength{\belowdisplayskip}{1pt}
+\setlength{\abovedisplayshortskip}{0pt}
+\setlength{\belowdisplayshortskip}{0pt}
+
+% enumeración
+\usepackage{enumitem}
+\setlist{noitemsep, topsep=0pt, leftmargin=*}
+
+% atajos de latex
+\usepackage{physics}
+
+% pseudocódigo
+\usepackage{algorithmicx}
+\usepackage{algpseudocode}
+\algtext*{EndFor}
+\algtext*{EndIf}
+\algtext*{EndWhile}
+\algtext*{EndProcedure}
+\algtext*{EndFunction}
+
+% cuadros
+\usepackage[most]{tcolorbox}
+\tcbset{
+    formulabox/.style={
+        colback=white,
+        colframe=black!60,
+        fonttitle=\bfseries\footnotesize,
+        title=#1,
+        boxrule=0.4pt,
+        arc=1mm,
+        left=1mm, right=1mm, top=0.5mm, bottom=0.5mm,
+        toptitle=0.3mm, bottomtitle=0.2mm,
+        before skip=1mm,
+        after skip=1mm,
+        before upper={
+            \raggedright\scriptsize
+            \setlength{\abovedisplayskip}{1pt}
+            \setlength{\belowdisplayskip}{1pt}
+            \setlength{\abovedisplayshortskip}{0pt}
+            \setlength{\belowdisplayshortskip}{0pt}
+            },
+        segmentation style={solid, line width=0.4pt},
+    }
+}
+
+% colores
+\usepackage[dvipsnames]{xcolor}
+
+\definecolor{softBlue}{HTML}{7A9EB5}
+\definecolor{softGreen}{HTML}{7AA882}
+\definecolor{softRed}{HTML}{B57A7A}
+\definecolor{softPurple}{HTML}{9A85A8}
+\definecolor{softOrange}{HTML}{B8956A}
+\definecolor{softTeal}{HTML}{6A9FA0}
+\definecolor{softBrown}{HTML}{8C7B6B}
+\definecolor{softSlate}{HTML}{7A8FA6}
+
+% comandos personalizados
+\newcommand{\w}{\mathbf{w}}
+\newcommand{\x}{\mathbf{x}}
+\newcommand{\X}{\mathbf{X}}
+\newcommand{\y}{\mathbf{y}}
+\newcommand{\z}{\mathbf{z}}
+\newcommand{\del}{\boldsymbol{\delta}}
+\newcommand{\bias}{\mathbf{b}}
+\newcommand{\preact}{\mathbf{a}}
+\newcommand{\W}{\mathbf{W}}
+\newcommand{\Loss}{\mathcal{L}}
+\newcommand{\muu}{\boldsymbol{\mu}}
+\newcommand{\Sig}{\boldsymbol{\Sigma}}
+
+\begin{document}
+\noindent
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% COL 1 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{minipage}[t]{0.325\textwidth}
+\vspace{0pt}
+
+% K-MEANS
+\begin{tcolorbox}[formulabox=K-Means, colframe=softRed]
+    \textbf{Objetivo}: $\min_{\{r_{nk}\},\{\muu_k\}} J = \sum_n\sum_k r_{nk}\|\x_n - \muu_k\|^2$ \\
+    $r_{nk} \in \{0,1\}$, $\sum_k r_{nk} = 1$ (asignación \textit{hard})
+    \vspace{-2mm}
+    \tcbline
+    \vspace{-2mm}
+    \textbf{Algoritmo EM}
+    \begin{algorithmic}[0]
+        \Statex \textit{Inicializar} $\muu_k$ (random o K-Means++)
+        \Repeat
+        \Statex \textbf{E}: $r_{nk} \leftarrow \mathbb{I}[k = \arg\min_{k'}\|\x_n - \muu_{k'}\|^2]$
+        \Statex \textbf{M}: $\muu_k \leftarrow \frac{\sum_n r_{nk}\x_n}{\sum_n r_{nk}}$
+        \Until{$J$ no cambia}
+    \end{algorithmic}
+    \textbf{K-Means++}: init con $p(\x_n) \propto d(\x_n,\text{centro más cercano})^2$\\
+    \textbf{Límite de GMM}: $\Sig_k = \varepsilon\mathbf{I}$, $\varepsilon\to 0$ $\Rightarrow$ asignación hard.
+\end{tcolorbox}
+
+% GMM
+\begin{tcolorbox}[formulabox=Gaussian Mixture Model (GMM), colframe=softRed]
+    $p(\x|\w) = \sum_{k=1}^K \pi_k\,\mathcal{N}(\x|\muu_k,\Sig_k)$;\quad $\sum_k\pi_k=1$ \\
+    Latente: $z \sim \text{Cat}(\boldsymbol{\pi})$; $\x|z=k \sim \mathcal{N}(\muu_k,\Sig_k)$\\
+    $\ln p(\X|\w) = \sum_n \ln \sum_k \pi_k\,\mathcal{N}(\x_n|\muu_k,\Sig_k)$
+    \vspace{-2mm}
+    \tcbline
+    \vspace{-2mm}
+    \textbf{E-step} (responsabilidades):
+    $r_{nk} = p(\z = k \mid x_n, \boldsymbol{\theta})= \dfrac{\pi_k\,\mathcal{N}(\x_n|\muu_k,\Sig_k)}{\sum_{k'}\pi_{k'}\,\mathcal{N}(\x_n|\muu_{k'},\Sig_{k'})}$\\[2pt]
+    \textbf{M-step}: $N_k = \textstyle\sum_n r_{nk}$\\
+    $\hat{\pi}_k = \tfrac{N_k}{N}$;\quad
+    $\hat{\muu}_k = \tfrac{1}{N_k}\sum_n r_{nk}\x_n$\\
+    $\hat{\Sig}_k = \tfrac{1}{N_k}\sum_n r_{nk}(\x_n{-}\hat{\muu}_k)(\x_n{-}\hat{\muu}_k)^\top$\\[2pt]
+    \textbf{Frontera GMM}:$r_{nk} = r_{nk'}$, lineal si $\Sig_k=\Sig \forall k$.
+\end{tcolorbox}
+
+% ELBO / EM GENERAL
+\begin{tcolorbox}[formulabox=EM General + ELBO, colframe=softTeal]
+    \textbf{Objetivo}: $\max_\w \ln p(\X|\w) = \max_\w \ln\sum_\mathbf{Z} p(\X,\mathbf{Z}|\w)$ \\[2pt]
+    Para cualquier $q(\mathbf{Z})$: \\
+    $\ln p(\X|\w) = \underbrace{\sum_\mathbf{Z} q(\mathbf{Z})\ln\frac{p(\X,\mathbf{Z}|\w)}{q(\mathbf{Z})}}_{\mathcal{L}(q,\w)} + \underbrace{\text{KL}(q\|p(\mathbf{Z}|\X,\w))}_{\geq\, 0}$\\
+    $\therefore\ \ln p(\X|\w) \geq \mathcal{L}(q,\w)$ \quad (\textbf{ELBO es cota inferior})\\[2pt]
+    \textbf{E-step}: $q^* = p(\mathbf{Z}|\X,\w^\text{old})$ $\Rightarrow$ KL$=0$, ELBO$=\ln p$\\
+    \textbf{M-step}: $\w^\text{new} = \arg\max_\w\,\mathcal{Q}(\w,\w^\text{old})$\\
+    $\mathcal{Q}(\w,\w^\text{old}) = \mathbb{E}_{p(\mathbf{Z}|\X,\w^\text{old})}[\ln p(\X,\mathbf{Z}|\w)]$\\[2pt]
+    \textbf{Garantía}: $\ln p(\X|\w^\text{new})\geq \ln p(\X|\w^\text{old})$ \\
+    (monótonamente no-decreciente; converge a máx.\ local)\\[2pt]
+    \textbf{ELBO expandido}: $\mathcal{L} = \mathbb{E}_q[\ln p(\X,\mathbf{Z}|\w)] + \mathbb{H}(q)$
+\end{tcolorbox}
+
+% DEMO 3
+\begin{tcolorbox}[formulabox={Demo: $\mathcal{L}$ VAE}, colframe=softBrown]
+    Para cualquier $q(\mathbf{Z})$, multiplicar y dividir por $q(\mathbf{Z})$:
+    \begin{align*}
+    \ln p(\X|\w) &= \ln\sum_\mathbf{Z} p(\X,\mathbf{Z}|\w) \\
+    &= \ln\sum_\mathbf{Z} q(\mathbf{Z})\frac{p(\X,\mathbf{Z}|\w)}{q(\mathbf{Z})}
+    \end{align*}
+    Separar en dos términos usando $\ln\tfrac{p(\X,\mathbf{Z})}{q} = \ln\tfrac{p(\X|\w) p(\mathbf{Z}|\X,\w)}{q}$:
+    $$= \underbrace{\sum_\mathbf{Z} q(\mathbf{Z})\ln\frac{p(\X,\mathbf{Z}|\w)}{q(\mathbf{Z})}}_{\mathcal{L}(q,\w)}
+      + \underbrace{\sum_\mathbf{Z} q(\mathbf{Z})\ln\frac{q(\mathbf{Z})}{p(\mathbf{Z}|\X,\w)}}_{\text{KL}(q\|p(\mathbf{Z}|\X,\w))}$$
+    Como KL $\geq 0$: $\ln p(\X|\w) \geq \mathcal{L}(q,\w)$ ($\mathcal{L}$ es cota inf.). $\square$
+\end{tcolorbox}
+
+% DEMO 4
+\begin{tcolorbox}[formulabox={Demo: max varianza equiv min error}, colframe=softBrown]
+    $\text{Var}[z] = \tfrac{1}{N}\sum_i z_i^2 = \tfrac{1}{N}\sum_i(\x_i^\top\hat{\mathbf{v}})^2 = \hat{\mathbf{v}}^\top\hat{\Sig}\hat{\mathbf{v}}$\\
+    $\text{MSE} = \tfrac{1}{N}\sum_i\|\x_i\|^2 - \hat{\mathbf{v}}^\top\hat{\Sig}\hat{\mathbf{v}}$\\
+    $= \text{const} - \text{Var}[z]$\\
+    $\Rightarrow$ min MSE $\Leftrightarrow$ max $\text{Var}[z]$. \quad $\square$
+\end{tcolorbox}
+
+% DEMO 5
+\begin{tcolorbox}[formulabox={Demo: mas K implica log-lik no decrece}, colframe=softBrown]
+    Sea $\w_K^*$ óptimo para $K$ clusters. Construir modelo con $K{+}1$ clusters tomando $\w_{K+1}$ con $\pi_{K+1}=0$ (degenerar nuevo cluster).\\
+    $\Rightarrow p_{K+1}(\X|\w_{K+1}) = p_K(\X|\w_K^*)$\\
+    $\Rightarrow \ln p(\X|\w_{K+1}^*) \geq \ln p(\X|\w_{K+1}) = \ln p(\X|\w_K^*)$\\
+    (el óptimo sobre $K{+}1$ no puede ser peor que incluir el caso $K$). $\square$
+\end{tcolorbox}
+
+\end{minipage}
+\hfill
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% COL 2 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{minipage}[t]{0.325\textwidth}
+\vspace{0pt}
+
+% PCA
+\begin{tcolorbox}[formulabox=PCA, colframe=softRed]
+    Centrar: $\tilde{\X}$; $\hat{\Sig} = \tfrac{1}{N}\tilde{\X}^\top\tilde{\X}$\\
+    Eigendecomposición: $\hat{\Sig}\mathbf{u}_l = \lambda_l\mathbf{u}_l$;\\
+    $\mathbf{U}_L = [\mathbf{u}_1,\ldots,\mathbf{u}_L]\in\mathbb{R}^{D\times L}$\\[2pt]
+    \textbf{Encode}: $\z_n = \mathbf{U}_L^\top\tilde{\x}_n$;\quad \textbf{Decode}: $\hat{\x}_n = \mathbf{U}_L\z_n + \hat{\muu}$\\
+    \textbf{Error recons.}: $\tfrac{1}{N}\|\tilde{\X}-\tilde{\X}\mathbf{U}_L\mathbf{U}_L^\top\|_F^2 = \sum_{l=L+1}^D\lambda_l$\\
+    \textbf{Var. explicada}: $\text{VE}(L)=(\sum_{l=1}^L\lambda_l)/(\sum_{l=1}^D\lambda_l)$\\[2pt]
+    \textbf{Vía SVD}: $\tilde{\X}=\mathbf{U}_\X\mathbf{S}\mathbf{V}^\top$; PC's = cols de $\mathbf{V}$; $\lambda_l=s_l^2/N$\\
+    \textbf{Var de $\z$}: $\text{Var}[z_l]=\lambda_l$ (coordenadas decorreladas)\\
+\end{tcolorbox}
+
+% AUTOENCODERS
+\begin{tcolorbox}[formulabox=Autoencoders, colframe=softRed]
+    \textbf{AE determinístico}: $\z=f_\phi(\x)$, $\hat{\x}=g_\theta(\z)$, $L\ll D$\\
+    $\Loss_\text{AE} = \tfrac{1}{N}\sum_n\|\x_n - g_\theta(f_\phi(\x_n))\|^2$\\
+    \textbf{AE lineal} $\equiv$ PCA (mismo subespacio); con no-linealidades $\to$ reducción no-lineal.\\[2pt]
+    \vspace{-2mm}
+    \tcbline
+    \vspace{-2mm}
+    \textbf{VAE}: prior $p(\z)=\mathcal{N}(\mathbf{0},\mathbf{I})$\\
+    Encoder: $q_\phi(\z|\x)=\mathcal{N}(\z|\muu_\phi(\x),\text{diag}(\boldsymbol{\sigma}^2_\phi(\x)))$\\
+    Decoder: $p_\theta(\x|\z)$\\[2pt]
+    \textbf{ELBO} (a maximizar):\\
+    $\Loss_\text{VAE} = \underbrace{\mathbb{E}_{q_\phi}[\ln p_\theta(\x|\z)]}_{\text{reconst.}} - \underbrace{\text{KL}(q_\phi(\z|\x)\|p(\z))}_{\text{regulariz.}}$\\
+    \textbf{KL gaussiano}:\\
+    $\text{KL}(\mathcal{N}(\muu,\text{diag}(\boldsymbol{\sigma}^2))\|\mathcal{N}(\mathbf{0},\mathbf{I}))$\\
+    $= \tfrac{1}{2}\sum_j(\mu_j^2+\sigma_j^2-\ln\sigma_j^2-1)$\\[2pt]
+    \textbf{Reparam.}: $\z=\muu_\phi(\x)+\boldsymbol{\sigma}_\phi(\x)\odot\boldsymbol{\varepsilon}$, $\boldsymbol{\varepsilon}\sim\mathcal{N}(\mathbf{0},\mathbf{I})$\\
+    (permite backprop a través del muestreo)
+\end{tcolorbox}
+
+% INFORMATION THEORY
+\begin{tcolorbox}[formulabox=Information Theory, colframe=softTeal]
+    \textbf{Entropía}: $\mathbb{H}(p) = -\sum_i p_i\log p_i \geq 0$\\
+    \textbf{KL divergence} (no simétrica, $\geq 0$):\\
+    $\text{KL}(q\|p) = \sum_i q_i\ln\tfrac{q_i}{p_i} = \mathbb{E}_q\!\left[\ln\tfrac{q}{p}\right]$\\
+    $\text{KL}(q\|p)=0 \Leftrightarrow q=p$;\quad $\text{KL}(q\|p)\neq\text{KL}(p\|q)$\\[2pt]
+    \textbf{KL gaussianas} ($p=\mathcal{N}(\muu_1,\Sig_1)$, $q=\mathcal{N}(\muu_0,\Sig_0)$):\\
+    $\text{KL}(q\|p)=\tfrac{1}{2}\!\left[\ln\tfrac{|\Sig_1|}{|\Sig_0|}+\text{tr}(\Sig_1^{-1}\Sig_0)+(\muu_1{-}\muu_0)^\top\Sig_1^{-1}(\muu_1{-}\muu_0)-D\right]$\\
+    Caso $p=\mathcal{N}(\mathbf{0},\mathbf{I})$: $\text{KL}=\tfrac{1}{2}\sum_j(\mu_j^2+\sigma_j^2-\ln\sigma_j^2-1)$\\[2pt]
+\end{tcolorbox}
+
+% CLUSTERING METRICS
+\begin{tcolorbox}[formulabox=Métricas de Clustering, colframe=softGreen]
+    $\underset{\text{within}}{\text{WCSS}} = \sum_k\sum_{n:r_{nk}=1}\|\x_n-\muu_k\|^2$ ($\downarrow$ mejor)\\
+    $\underset{\text{between}}{\text{BCSS}} = \sum_k N_k\|\muu_k-\bar{\x}\|^2$ ($\uparrow$ mejor)\\[2pt]
+    \textbf{Silhouette} $s(n)\in[-1,1]$: $a(n)$ = dist.\ intra, $b(n)$ = dist.\ al vecino más cercano\\
+    $s(n)=\tfrac{b(n)-a(n)}{\max(a(n),b(n))}$;\quad $\bar{s}=\tfrac{1}{N}\sum_n s(n)$\\[2pt]
+    \textbf{Davies-Bouldin}: $\text{DB}=\tfrac{1}{K}\sum_k\max_{k'\neq k}\tfrac{s_k+s_{k'}}{d(\muu_k,\muu_{k'})}$\\
+    \textbf{Elbow}: graficar WCSS vs.\ $K$; codo $= K$ óptimo.\\
+    \textbf{BIC}: $-2\ln\hat{p}(\X) + d_K\ln N$; $\downarrow$ mejor; selecciona $K$.
+    \textbf{Mutual. Info} (con labels):\\
+    $I(S_k;Y)=\sum_i\sum_j p_{C_iY}(i,j)\log\dfrac{p_{C_iY}(i,j)}{p_{C_i}(i)\,p_Y(j)}$\\
+    $p_{C_iY}(i,j)=\tfrac{|c_i\cap y_j|}{N}$;\quad $I(X;Y)=0\Leftrightarrow X\perp Y$\\
+    $I(X;Y)=\mathbb{H}(X)-\mathbb{H}(X|Y)=\mathbb{H}(Y)-\mathbb{H}(Y|X)$\\[2pt]
+    \textbf{NMI} (Normalized Mutual Information):\\
+    $\text{NMI}(S_k,Y)=\dfrac{2\,I(S_k;Y)}{\mathbb{H}(S_k)+\mathbb{H}(Y)}\in[0,1]$\quad($\uparrow$ mejor)
+\end{tcolorbox}
+
+% DEMO 6
+\begin{tcolorbox}[formulabox={Demo: EM-GMM - funcion Q y concavidad}, colframe=softBrown]
+    \textbf{E-step} — $\mathcal{Q}(\w,\w^\text{old})$:\\
+    $p(\X,\mathbf{Z}|\w)=\prod_n\prod_k[\pi_k\mathcal{N}(\x_n|\muu_k,\Sig_k)]^{z_{nk}}$\\
+    $\ln p(\X,\mathbf{Z}|\w)=\sum_n\sum_k z_{nk}[\ln\pi_k+\ln\mathcal{N}(\x_n|\muu_k,\Sig_k)]$\\
+    $\mathcal{Q}=\sum_n\sum_k r_{nk}[\ln\pi_k - \tfrac{1}{2}\ln|\Sig_k| - \tfrac{1}{2}(\x_n{-}\muu_k)^\top\Sig_k^{-1}(\x_n{-}\muu_k)]$\\[2pt]
+    \textbf{M-step} para $\muu_k$: $\nabla_{\muu_k}\mathcal{Q}=0$\\
+    $\sum_n r_{nk}\Sig_k^{-1}(\x_n{-}\muu_k)=0 \Rightarrow \hat{\muu}_k = \tfrac{\sum_n r_{nk}\x_n}{N_k}$\\[2pt]
+    \textbf{M-step} para $\Sig_k$: $\nabla_{\Lambda_k}\mathcal{Q}=0$ con $\Lambda_k=\Sig_k^{-1}$:\\
+    $\tfrac{N_k}{2}\Sig_k - \tfrac{1}{2}\sum_n r_{nk}(\x_n{-}\hat{\muu}_k)(\x_n{-}\hat{\muu}_k)^\top=0$\\
+    $\Rightarrow \hat{\Sig}_k = \tfrac{1}{N_k}\sum_n r_{nk}(\x_n{-}\hat{\muu}_k)(\x_n{-}\hat{\muu}_k)^\top$\\[2pt]
+    \textbf{M-step} para $\pi_k$ (Lagrange $\sum\pi_k=1$):\\
+    $\nabla_{\pi_k}[\mathcal{Q}+\nu(\sum\pi_k-1)]=0 \Rightarrow \hat{\pi}_k=\tfrac{N_k}{N}$\\[2pt]
+    \textbf{Concavidad de $\mathcal{Q}$}: es una suma de $\ln\mathcal{N}$ ponderados; $\ln\mathcal{N}$ es cóncavo en $(\muu_k,\Sig_k)$ $\Rightarrow$ $\mathcal{Q}$ cóncava $\Rightarrow$ M-step es único. $\square$
+\end{tcolorbox}
+ 
+\end{minipage}
+\hfill
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% COL 3 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{minipage}[t]{0.325\textwidth}
+\vspace{0pt}
+
+% DBSCAN
+\begin{tcolorbox}[formulabox=DBSCAN, colframe=softRed]
+    \textbf{Params}: $\varepsilon$ (radio), MinPts (densidad mínima).\\
+    \textbf{Core point}: $|\mathcal{N}_\varepsilon(\x)| \geq \text{MinPts}$\\
+    \textbf{Border point}: vecino de core, pero no core.\\
+    \textbf{Noise}: ni core ni border.\\
+    \textbf{Cluster}: componente conexa de core points (+ borders).
+    \vspace{-2mm}
+    \tcbline
+    \vspace{-2mm}
+    \begin{algorithmic}[0]
+        \For{cada $\x_n$ no visitado}
+            \State marcar $\x_n$ como visitado
+            \If{$|\mathcal{N}_\varepsilon(\x_n)| \geq \text{MinPts}$}
+                \State nuevo cluster $C$; expandir($\x_n$, $C$)
+            \Else\ marcar como noise (puede cambiar)
+            \EndIf
+        \EndFor
+        \Statex \textit{expandir}($\x$, $C$): agregar $\x$ a $C$; para cada $\x'\in\mathcal{N}_\varepsilon(\x)$ no visitado: visitar; si es core, expandir($\x'$, $C$).
+    \end{algorithmic}
+    \vspace{-2mm}
+    \tcbline
+    \vspace{-2mm}
+    \textbf{Ventajas}: detecta formas arbitrarias; identifica outliers; no requiere $K$.\\
+    \textbf{Desventajas}: sensible a $\varepsilon$ y MinPts; mal con densidades variables.\\
+    $\uparrow\varepsilon$ $\to$ menos clusters más grandes;\; $\uparrow$MinPts $\to$ más noise.
+\end{tcolorbox}
+
+% TSNE
+\begin{tcolorbox}[formulabox=t-SNE, colframe=softRed]
+    Reducción no-lineal para visualización; preserva estructura \textit{local}.\\[2pt]
+    \textbf{Similitud original} (Gaussiana):\;
+    $p_{ij} = \tfrac{p_{j|i}+p_{i|j}}{2N}$,\quad
+    $p_{j|i} \propto \exp\!\left(-\tfrac{\|\x_i-\x_j\|^2}{2\sigma_i^2}\right)$\\[2pt]
+    \textbf{Similitud latente} (Student-$t$, $\nu=1$ — cola pesada):\;
+    $q_{ij} \propto \left(1+\|\y_i-\y_j\|^2\right)^{-1}$\\[2pt]
+    \textbf{Objetivo}: $\min_{\{\y_i\}}\;\text{KL}(P\|Q)=\sum_{i\neq j}p_{ij}\ln\tfrac{p_{ij}}{q_{ij}}$\\
+    \textbf{Perplexity}: controla $\sigma_i$; $\approx$ \# vecinos relevantes.\\
+    \textbf{Limitaciones}: no generaliza; no preserva estructura global.
+\end{tcolorbox}
+
+% LINALG
+\begin{tcolorbox}[formulabox=Álgebra Lineal, colframe=softOrange]
+    \textbf{Traza y ciclo}: $\text{tr}(\mathbf{ABC})=\text{tr}(\mathbf{CAB})=\text{tr}(\mathbf{BCA})$\\
+    $\x^\top\mathbf{A}\x = \text{tr}(\mathbf{A}\x\x^\top)$ \quad (escalar $\to$ traza)\\[2pt]
+    \textbf{Gradientes matriciales clave}:\\
+    $\nabla_\mathbf{A}\text{tr}(\mathbf{A}\mathbf{B}) = \mathbf{B}^\top$\\
+    $\nabla_\mathbf{A}\ln|\mathbf{A}| = \mathbf{A}^{-\top}$ (i.e.\ $\Sig^{-1}$ si $\Sig$ SDP)\\
+    $\nabla_\mathbf{A}(\x^\top\mathbf{A}^{-1}\x) = -\mathbf{A}^{-\top}\x\x^\top\mathbf{A}^{-\top}$\\[2pt]
+    \textbf{Identidades para $\Sig$} (sugeridas en ej.\ 20):\\
+    Si $\Lambda=\Sig^{-1}$: $\nabla_\Lambda\ln|\Lambda|=\Lambda^{-\top}=\Sig^\top$\\
+    $\nabla_\Lambda\text{tr}(\Lambda\mathbf{S}) = \mathbf{S}^\top$\\[2pt]
+    \textbf{Proyección ortogonal}: $\mathbf{P}=\hat{\mathbf{v}}\hat{\mathbf{v}}^\top$ (rango 1, idempotente)\\
+    $\|\x - \mathbf{P}\x\|^2 = \|\x\|^2 - (\x^\top\hat{\mathbf{v}})^2$\\[2pt]
+    \textbf{Matriz ortogonal} $\mathbf{R}$: $\mathbf{R}^\top\mathbf{R}=\mathbf{I}$, $|\det\mathbf{R}|=1$\\
+    $\|\mathbf{R}\x\|^2 = \x^\top\mathbf{R}^\top\mathbf{R}\x = \|\x\|^2$ (isometría)\\[2pt]
+    \textbf{Autovalores y traza/det}:\\
+    $\text{tr}(\mathbf{A})=\sum_i\lambda_i$;\quad $|\mathbf{A}|=\prod_i\lambda_i$\\
+    $\text{tr}(\mathbf{AB})=\text{tr}(\mathbf{BA})$ incluso si $\mathbf{A},\mathbf{B}$ no cuadradas\\[2pt]
+    \textbf{Restricción con Lagrange}: \\
+    $\max_{\hat{\mathbf{v}}}\hat{\mathbf{v}}^\top\hat{\Sig}\hat{\mathbf{v}}$ s.t.\ $\|\hat{\mathbf{v}}\|=1$\\
+    $\Rightarrow \mathcal{L} = \hat{\mathbf{v}}^\top\hat{\Sig}\hat{\mathbf{v}} - \lambda(\hat{\mathbf{v}}^\top\hat{\mathbf{v}}-1)$\\
+    $\Rightarrow \hat{\Sig}\hat{\mathbf{v}}=\lambda\hat{\mathbf{v}}$ (autoproblema)\\
+    $\Rightarrow$ máx.\ varianza $= \lambda_1$ con $\hat{\mathbf{v}}=\mathbf{u}_1$\\
+    \textbf{Gaussiana multivariada} $\mathcal{N}(\x|\muu,\Sig)$:\\
+    $\dfrac{1}{(2\pi)^{D/2}|\Sig|^{1/2}}\exp\!\left(-\tfrac{1}{2}(\x{-}\muu)^\top\Sig^{-1}(\x{-}\muu)\right)$\\
+\end{tcolorbox}
+
+% DEMO 1
+\begin{tcolorbox}[formulabox={Demo: PCA minimiza error de reconstruccion}, colframe=softBrown]
+    Datos centrados ($\hat{\muu}=0$). $\tilde{x}_i = z_i\hat{\mathbf{v}}$, $z_i = \x_i^\top\hat{\mathbf{v}}$.\\
+    $\text{MSE} = \tfrac{1}{N}\sum_i\|\x_i - z_i\hat{\mathbf{v}}\|^2$\\
+    $= \tfrac{1}{N}\sum_i\|\x_i\|^2 - \tfrac{1}{N}\sum_i(\x_i^\top\hat{\mathbf{v}})^2$\\
+    $= \text{const} - \hat{\mathbf{v}}^\top\!\left(\tfrac{1}{N}\X^\top\X\right)\!\hat{\mathbf{v}}$\\
+    $\Rightarrow$ minimizar MSE $\equiv$ maximizar $\hat{\mathbf{v}}^\top\hat{\Sig}\hat{\mathbf{v}}$.\\
+    Con restricción $\|\hat{\mathbf{v}}\|=1$ (Lagrange):\\
+    $\hat{\Sig}\hat{\mathbf{v}}=\lambda\hat{\mathbf{v}}$; la varianza $=\lambda$.\\
+    $\Rightarrow \hat{\mathbf{v}}^*=\mathbf{u}_1$ (autovector de $\lambda_{\max}$).
+\end{tcolorbox}
+
+% DEMO 2
+\begin{tcolorbox}[formulabox={Demo: PCA invariante a roto-traslaciones}, colframe=softBrown]
+    $\x_i'= R\x_i + \bias$\\
+    \textbf{Traslación}: $\x_i'=\x + \bias \implies \muu' = \muu + \bias$.\\
+    $\tilde{\x}=\x'_i - \muu'  = \x_i + \bias - (\muu+ \bias) = \x_i - \muu$.\\
+    \textbf{Rotación}: $\tilde{\x}_i' = \mathbf{R}\tilde{\x}_i$, $\mathbf{R}$ de rotación ($\perp$, $\det = 1$). \\
+    $\hat{\Sig}' = \mathbf{R}\tilde{\X}\tilde{\X}^\top\mathbf{R}^\top = \mathbf{R}\hat{\Sig}\mathbf{R}^\top$\\
+    Si $\hat{\Sig}\mathbf{u}_l=\lambda_l\mathbf{u}_l$ $\Rightarrow$ $\hat{\Sig}'(\mathbf{R}\mathbf{u}_l)=\lambda_l(\mathbf{R}\mathbf{u}_l)$\\
+    Coords reducidas: $z_l' = (\mathbf{R}\mathbf{u}_l)^\top(\mathbf{R}\tilde{\x}_i) = \mathbf{u}_l^\top\mathbf{R}^\top\mathbf{R}\tilde{\x}_i = z_l$.
+\end{tcolorbox}
+
+\end{minipage}
+
+\end{document}

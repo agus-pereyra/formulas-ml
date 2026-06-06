@@ -94,7 +94,7 @@
 \newcommand{\Loss}{\mathcal{L}}
 \newcommand{\muu}{\boldsymbol{\mu}}
 \newcommand{\Sig}{\boldsymbol{\Sigma}}
-
+\newcommand{\ELBO}{\text{\L}}
 \begin{document}
 \noindent
 
@@ -109,16 +109,12 @@
     \vspace{-2mm}
     \tcbline
     \vspace{-2mm}
-    \textbf{Algoritmo EM}
-    \begin{algorithmic}[0]
-        \Statex \textit{Inicializar} $\muu_k$ (random o K-Means++)
-        \Repeat
-        \Statex \textbf{E}: $r_{nk} \leftarrow \mathbb{I}[k = \arg\min_{k'}\|\x_n - \muu_{k'}\|^2]$
-        \Statex \textbf{M}: $\muu_k \leftarrow \frac{\sum_n r_{nk}\x_n}{\sum_n r_{nk}}$
-        \Until{$J$ no cambia}
-    \end{algorithmic}
-    \textbf{K-Means++}: init con $p(\x_n) \propto d(\x_n,\text{centro más cercano})^2$\\
-    \textbf{Límite de GMM}: $\Sig_k = \varepsilon\mathbf{I}$, $\varepsilon\to 0$ $\Rightarrow$ asignación hard.
+    \textbf{Inicialización} $\muu_k$ (random o K-Means++) \\
+    $\approx$\textbf{E-Step}: $z_n^* \leftarrow \arg\min_k \|\x_n - \muu_k\|^2$ \\
+    $\approx$\textbf{M-Step}: $\muu_k \leftarrow \frac{1}{N_k}\sum_{n:\,z_n^*=k}\x_n$ \\
+    \textbf{K-Means++}: $p(\muu_{t+1} =\x_n) = \frac{d_{t}(\x_n)}{\sum_{n'} d_t(\x_{n'})}$\\
+    $d_t(\x)=\min^{t}_{k=1} \| \x - \muu_k\|^2_2$ \\
+    \textbf{Límite de GMM}: $\Sig_k = \varepsilon\mathbf{I}$, $\varepsilon\to 0$ $\Rightarrow$ asignación hard (gaussianas infinitamente concentradas).
 \end{tcolorbox}
 
 % GMM
@@ -129,40 +125,43 @@
     \vspace{-2mm}
     \tcbline
     \vspace{-2mm}
-    \textbf{E-step} (responsabilidades):
+    \textbf{E-step} (responsabilidades, soft clust.):
     $r_{nk} = p(\z = k \mid x_n, \boldsymbol{\theta})= \dfrac{\pi_k\,\mathcal{N}(\x_n|\muu_k,\Sig_k)}{\sum_{k'}\pi_{k'}\,\mathcal{N}(\x_n|\muu_{k'},\Sig_{k'})}$\\[2pt]
-    \textbf{M-step}: $N_k = \textstyle\sum_n r_{nk}$\\
+    \textbf{M-step}:\\
+    $N_k = \textstyle\sum_n r_{nk}$;\quad
     $\hat{\pi}_k = \tfrac{N_k}{N}$;\quad
     $\hat{\muu}_k = \tfrac{1}{N_k}\sum_n r_{nk}\x_n$\\
     $\hat{\Sig}_k = \tfrac{1}{N_k}\sum_n r_{nk}(\x_n{-}\hat{\muu}_k)(\x_n{-}\hat{\muu}_k)^\top$\\[2pt]
+    \textbf{Asignación} (hard clust.): $\z_n = {\arg \max}_k r_{nk}$ \\
     \textbf{Frontera GMM}:$r_{nk} = r_{nk'}$, lineal si $\Sig_k=\Sig \forall k$.
 \end{tcolorbox}
 
-% ELBO / EM GENERAL
-\begin{tcolorbox}[formulabox=EM General + ELBO, colframe=softTeal]
-    \textbf{Objetivo}: $\max_\w \ln p(\X|\w) = \max_\w \ln\sum_\mathbf{Z} p(\X,\mathbf{Z}|\w)$ \\[2pt]
-    Para cualquier $q(\mathbf{Z})$: \\
-    $\ln p(\X|\w) = \underbrace{\sum_\mathbf{Z} q(\mathbf{Z})\ln\frac{p(\X,\mathbf{Z}|\w)}{q(\mathbf{Z})}}_{\mathcal{L}(q,\w)} + \underbrace{\text{KL}(q\|p(\mathbf{Z}|\X,\w))}_{\geq\, 0}$\\
-    $\therefore\ \ln p(\X|\w) \geq \mathcal{L}(q,\w)$ \quad (\textbf{ELBO es cota inferior})\\[2pt]
-    \textbf{E-step}: $q^* = p(\mathbf{Z}|\X,\w^\text{old})$ $\Rightarrow$ KL$=0$, ELBO$=\ln p$\\
-    \textbf{M-step}: $\w^\text{new} = \arg\max_\w\,\mathcal{Q}(\w,\w^\text{old})$\\
-    $\mathcal{Q}(\w,\w^\text{old}) = \mathbb{E}_{p(\mathbf{Z}|\X,\w^\text{old})}[\ln p(\X,\mathbf{Z}|\w)]$\\[2pt]
-    \textbf{Garantía}: $\ln p(\X|\w^\text{new})\geq \ln p(\X|\w^\text{old})$ \\
-    (monótonamente no-decreciente; converge a máx.\ local)\\[2pt]
-    \textbf{ELBO expandido}: $\mathcal{L} = \mathbb{E}_q[\ln p(\X,\mathbf{Z}|\w)] + \mathbb{H}(q)$
+% ELBO + EM
+\begin{tcolorbox}[formulabox=EM \& ELBO, colframe=softTeal]
+    \textbf{Goal}: $\max_\w \ln p(\x|\w) = \max_\w \ln\sum_\z p(\x,\z|\w)$ \\[2pt]
+    Asumiendo $q(\z)$: \\
+    $\ln p(\x|\w) = \underbrace{\sum_\z q(\z)\ln\frac{p(\x,\z|\w)}{q(\z)}}_{\ELBO(\w, q)} + \underbrace{\text{KL}(q\|p(\z|\x,\w))}_{\geq\, 0}$\\
+    $\therefore\ \ln p(\x|\w) \geq \ELBO(\w, q)$ \quad (\textbf{ELBO lower bound})\\[2pt]
+    \textbf{E-step}: Maximizar $\ELBO$ respecto $q$\\
+    $q^* = p(\z|\x,\w^{t-1})$ $\Rightarrow$ KL$=0$, $\ELBO=\ln p$\\
+    \textbf{M-step}: Maximizar $\ELBO$ respecto $\w$\\
+    $\w^t = \arg\max_\w\,\mathbb{E}_{q(\z)}[\ln p(\x,\z|\w)]$\\
+    \textbf{Convergencia}: $\ln p(\x|\w^t)\geq \ln p(\x|\w^{t-1})$\\
+    (no-decreciente; converge al menos a máx.\ local)\\[2pt]
+    \textbf{ELBO expandido}: $\ELBO = \mathbb{E}_q[\ln p(\x,\z|\w)] + \mathbb{H}(q)$
 \end{tcolorbox}
 
 % DEMO 3
 \begin{tcolorbox}[formulabox={Demo: $\mathcal{L}$ VAE}, colframe=softBrown]
-    Para cualquier $q(\mathbf{Z})$, multiplicar y dividir por $q(\mathbf{Z})$:
+    Para cualquier $q(\z)$, multiplicar y dividir por $q(\z)$:
     \begin{align*}
-    \ln p(\X|\w) &= \ln\sum_\mathbf{Z} p(\X,\mathbf{Z}|\w) \\
-    &= \ln\sum_\mathbf{Z} q(\mathbf{Z})\frac{p(\X,\mathbf{Z}|\w)}{q(\mathbf{Z})}
+    \ln p(\x|\w) &= \ln\sum_\z p(\x,\z|\w) \\
+    &= \ln\sum_\z q(\z)\frac{p(\x,\z|\w)}{q(\z)}
     \end{align*}
-    Separar en dos términos usando $\ln\tfrac{p(\X,\mathbf{Z})}{q} = \ln\tfrac{p(\X|\w) p(\mathbf{Z}|\X,\w)}{q}$:
-    $$= \underbrace{\sum_\mathbf{Z} q(\mathbf{Z})\ln\frac{p(\X,\mathbf{Z}|\w)}{q(\mathbf{Z})}}_{\mathcal{L}(q,\w)}
-      + \underbrace{\sum_\mathbf{Z} q(\mathbf{Z})\ln\frac{q(\mathbf{Z})}{p(\mathbf{Z}|\X,\w)}}_{\text{KL}(q\|p(\mathbf{Z}|\X,\w))}$$
-    Como KL $\geq 0$: $\ln p(\X|\w) \geq \mathcal{L}(q,\w)$ ($\mathcal{L}$ es cota inf.). $\square$
+    Separar en dos términos usando $\ln\tfrac{p(\x,\z)}{q} = \ln\tfrac{p(\x|\w) p(\z|\x,\w)}{q}$:
+    $$= \underbrace{\sum_\z q(\z)\ln\frac{p(\x,\z|\w)}{q(\z)}}_{\mathcal{L}(q,\w)}
+      + \underbrace{\sum_\z q(\z)\ln\frac{q(\z)}{p(\z|\x,\w)}}_{\text{KL}(q\|p(\z|\x,\w))}$$
+    Como KL $\geq 0$: $\ln p(\x|\w) \geq \mathcal{L}(q,\w)$ ($\mathcal{L}$ es cota inf.)
 \end{tcolorbox}
 
 % DEMO 4
@@ -270,44 +269,26 @@
 \vspace{0pt}
 
 % DBSCAN
-\begin{tcolorbox}[formulabox=DBSCAN, colframe=softRed]
-    \textbf{Params}: $\varepsilon$ (radio), MinPts (densidad mínima).\\
-    \textbf{Core point}: $|\mathcal{N}_\varepsilon(\x)| \geq \text{MinPts}$\\
-    \textbf{Border point}: vecino de core, pero no core.\\
-    \textbf{Noise}: ni core ni border.\\
-    \textbf{Cluster}: componente conexa de core points (+ borders).
-    \vspace{-2mm}
-    \tcbline
-    \vspace{-2mm}
+\begin{tcolorbox}[formulabox=Clustering+++, colframe=softRed]
+    \textbf{HAC} (Hierarchical Agglomerative):\\
+    Bottom-up: empieza con $N$ clusters, fusiona iterativamente los más cercanos $\to$ dendrograma. No requiere $K$ a priori.\\
+    \textit{Linkage}: single ($\min$ dist), complete ($\max$ dist), average, Ward ($\min\Delta$WCSS).\\[2pt]
+    \textbf{DBSCAN}: params $\varepsilon$, MinPts.\\
+    \textit{Core}: $|\mathcal{N}_\varepsilon(\x)|\geq\text{MinPts}$;\; \textit{Border}: vecino de core; \textit{Noise}: resto.\\
+    Clusters = componentes conexas de cores + borders.
     \begin{algorithmic}[0]
-        \For{cada $\x_n$ no visitado}
-            \State marcar $\x_n$ como visitado
-            \If{$|\mathcal{N}_\varepsilon(\x_n)| \geq \text{MinPts}$}
-                \State nuevo cluster $C$; expandir($\x_n$, $C$)
-            \Else\ marcar como noise (puede cambiar)
-            \EndIf
+        \For{$\x_n$ no visitado}
+            \If{$|\mathcal{N}_\varepsilon(\x_n)|\geq\text{MinPts}$} nuevo cluster; expandir($\x_n$)
+            \Else\ noise \EndIf
         \EndFor
-        \Statex \textit{expandir}($\x$, $C$): agregar $\x$ a $C$; para cada $\x'\in\mathcal{N}_\varepsilon(\x)$ no visitado: visitar; si es core, expandir($\x'$, $C$).
     \end{algorithmic}
-    \vspace{-2mm}
-    \tcbline
-    \vspace{-2mm}
-    \textbf{Ventajas}: detecta formas arbitrarias; identifica outliers; no requiere $K$.\\
-    \textbf{Desventajas}: sensible a $\varepsilon$ y MinPts; mal con densidades variables.\\
-    $\uparrow\varepsilon$ $\to$ menos clusters más grandes;\; $\uparrow$MinPts $\to$ más noise.
-\end{tcolorbox}
-
-% TSNE
-\begin{tcolorbox}[formulabox=t-SNE, colframe=softRed]
-    Reducción no-lineal para visualización; preserva estructura \textit{local}.\\[2pt]
-    \textbf{Similitud original} (Gaussiana):\;
-    $p_{ij} = \tfrac{p_{j|i}+p_{i|j}}{2N}$,\quad
-    $p_{j|i} \propto \exp\!\left(-\tfrac{\|\x_i-\x_j\|^2}{2\sigma_i^2}\right)$\\[2pt]
-    \textbf{Similitud latente} (Student-$t$, $\nu=1$ — cola pesada):\;
-    $q_{ij} \propto \left(1+\|\y_i-\y_j\|^2\right)^{-1}$\\[2pt]
-    \textbf{Objetivo}: $\min_{\{\y_i\}}\;\text{KL}(P\|Q)=\sum_{i\neq j}p_{ij}\ln\tfrac{p_{ij}}{q_{ij}}$\\
-    \textbf{Perplexity}: controla $\sigma_i$; $\approx$ \# vecinos relevantes.\\
-    \textbf{Limitaciones}: no generaliza; no preserva estructura global.
+    No requiere $K$; detecta formas arbitrarias; sensible a $\varepsilon$.\\[2pt]
+    \textbf{Spectral Clustering}:\\
+    Grafo de similitud $\mathbf{W}$; Laplaciano $\mathbf{L}=\mathbf{D}-\mathbf{W}$.\\
+    Usar los $K$ autovectores de menor $\lambda$ de $\mathbf{L}$ como features; aplicar K-Means. Detecta clusters no convexos.\\[2pt]
+    \textbf{Mixture of Bernoullis} ($\x\in\{0,1\}^D$):\\
+    $p(\x|\w)=\sum_k\pi_k\prod_d\mu_{kd}^{x_d}(1{-}\mu_{kd})^{1-x_d}$\\
+    EM igual que GMM; M-step: $\hat{\mu}_{kd}=\tfrac{\sum_n r_{nk}x_{nd}}{N_k}$
 \end{tcolorbox}
 
 % LINALG

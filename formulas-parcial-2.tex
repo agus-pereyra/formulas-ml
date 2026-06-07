@@ -95,6 +95,7 @@
 \newcommand{\muu}{\boldsymbol{\mu}}
 \newcommand{\Sig}{\boldsymbol{\Sigma}}
 \newcommand{\ELBO}{\text{\L}}
+\newcommand{\E}{\mathbb{E}}
 \begin{document}
 \noindent
 
@@ -153,15 +154,15 @@
 
 % DEMO 3
 \begin{tcolorbox}[formulabox={Demo: $\mathcal{L}$ VAE}, colframe=softBrown]
-    Para cualquier $q(\z)$, multiplicar y dividir por $q(\z)$:
     \begin{align*}
-    \ln p(\x|\w) &= \ln\sum_\z p(\x,\z|\w) \\
-    &= \ln\sum_\z q(\z)\frac{p(\x,\z|\w)}{q(\z)}
+        \ln p(\x|\theta, \phi) &= \ln \int  p_\theta(\x,\z) d\z = \ln \int q_\phi(\z|\x) \tfrac{p_\theta(\x,\z)}{q_\phi(\z|\x)} \\
+        &= \ln \E_{q_\phi}[\tfrac{p_\theta(\x,\z)}{q_\phi(\z|\x)}] \\
+        \text{(Jensen)} &\geq \E_{q_\phi}[\ln \tfrac{p_\theta(\x,\z)}{q_\phi(\z|\x)}] \\
+        &= \E_{q_\phi}[\ln p_\theta(\x|\z) + \ln p(\z) - \ln q_\phi(\z|\x)] \\
+        &= \E_{q_\phi}[\ln p_\theta(\x|\z)] - \E_{q_\phi}[\ln \tfrac{q_\phi(\z|\x)}{p(\z)}] \\
+        &= \E_{q_\phi}[\ln p_\theta(\x|\z)] - D_{\mathbb{KL}}(q_\phi(\z|\x) \| p(\z))
     \end{align*}
-    Separar en dos términos usando $\ln\tfrac{p(\x,\z)}{q} = \ln\tfrac{p(\x|\w) p(\z|\x,\w)}{q}$:
-    $$= \underbrace{\sum_\z q(\z)\ln\frac{p(\x,\z|\w)}{q(\z)}}_{\mathcal{L}(q,\w)}
-      + \underbrace{\sum_\z q(\z)\ln\frac{q(\z)}{p(\z|\x,\w)}}_{\text{KL}(q\|p(\z|\x,\w))}$$
-    Como KL $\geq 0$: $\ln p(\x|\w) \geq \mathcal{L}(q,\w)$ ($\mathcal{L}$ es cota inf.)
+   
 \end{tcolorbox}
 
 % DEMO 4
